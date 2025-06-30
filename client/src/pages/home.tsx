@@ -74,10 +74,10 @@ export default function Home() {
                 Docs
               </a>
               
-              {/* GitHub CTA Button - Perfect for Judges */}
+              {/* GitHub CTA Button - Outline Style with Brand Colors */}
               <button 
                 onClick={handleGitHubClick}
-                className="flex items-center space-x-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 rounded-lg font-medium transition-all duration-200 border border-slate-200 hover:border-slate-300 group"
+                className="flex items-center space-x-2 px-4 py-2 border-2 border-blue-500 text-blue-600 hover:bg-blue-50 hover:border-blue-600 hover:text-blue-700 rounded-lg font-medium transition-all duration-200 group"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
@@ -95,7 +95,7 @@ export default function Home() {
             <div className="md:hidden flex items-center space-x-3">
               <button 
                 onClick={handleGitHubClick}
-                className="flex items-center space-x-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-all duration-200"
+                className="flex items-center space-x-2 px-3 py-2 border-2 border-blue-500 text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
               >
                 <Github className="w-4 h-4" />
                 <span className="text-sm font-medium">Source</span>
