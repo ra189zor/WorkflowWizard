@@ -262,7 +262,7 @@ Feel free to try again with a modified request!`;
         </div>
       </div>
 
-      {/* Chat Input with increased padding */}
+      {/* Enhanced Chat Input with prominent CTA */}
       <div className="border-t border-slate-200 p-8 bg-gradient-to-r from-slate-50 to-white">
         <div className="max-w-2xl mx-auto">
           <div className="flex space-x-4">
@@ -277,15 +277,22 @@ Feel free to try again with a modified request!`;
                 rows={3}
               />
             </div>
+            {/* Enhanced Primary CTA Button */}
             <Button
               onClick={handleSendMessage}
               disabled={!inputMessage.trim() || isGenerating}
-              className="self-end bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg"
+              className="self-end bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg hover:shadow-xl transition-all duration-200 px-6 py-3 h-auto flex items-center space-x-2 font-semibold"
             >
               {isGenerating ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <span>Generating...</span>
+                </>
               ) : (
-                <Send className="w-4 h-4" />
+                <>
+                  <Send className="w-5 h-5" />
+                  <span>Generate</span>
+                </>
               )}
             </Button>
           </div>

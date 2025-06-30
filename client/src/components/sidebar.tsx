@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Clock, Trash2 } from "lucide-react";
+import { Clock, Trash2, Sparkles } from "lucide-react";
 import { useRecentWorkflows } from "@/hooks/use-local-storage";
 import type { Template } from "@/lib/types";
 
@@ -56,15 +56,18 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
               <Button
                 key={template.id}
                 variant="outline"
-                className="w-full text-left p-4 h-auto justify-start hover:border-primary hover:bg-blue-50 transition-colors group"
+                className="w-full text-left p-4 h-auto justify-start hover:border-primary hover:bg-blue-50 transition-all duration-200 group hover:shadow-md"
                 onClick={() => handleTemplateClick(template)}
               >
-                <div>
-                  <div className="font-medium text-slate-900 group-hover:text-primary">
-                    {template.name}
-                  </div>
-                  <div className="text-sm text-slate-500 mt-1">
-                    {template.description}
+                <div className="flex items-start space-x-3">
+                  <Sparkles className="w-4 h-4 text-blue-500 mt-1 group-hover:text-primary transition-colors" />
+                  <div>
+                    <div className="font-medium text-slate-900 group-hover:text-primary transition-colors">
+                      {template.name}
+                    </div>
+                    <div className="text-sm text-slate-500 mt-1 group-hover:text-slate-600 transition-colors">
+                      {template.description}
+                    </div>
                   </div>
                 </div>
               </Button>
@@ -95,13 +98,13 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
               <Button
                 key={workflow.id}
                 variant="ghost"
-                className="w-full text-left p-3 h-auto justify-start hover:bg-blue-50 transition-colors group"
+                className="w-full text-left p-3 h-auto justify-start hover:bg-blue-50 transition-all duration-200 group hover:shadow-sm"
                 onClick={() => handleRecentWorkflowClick(workflow)}
               >
                 <div className="flex items-start space-x-2 w-full">
-                  <Clock className="w-3 h-3 text-slate-400 mt-1 flex-shrink-0" />
+                  <Clock className="w-3 h-3 text-slate-400 mt-1 flex-shrink-0 group-hover:text-blue-500 transition-colors" />
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-slate-900 group-hover:text-primary truncate">
+                    <div className="text-sm font-medium text-slate-900 group-hover:text-primary truncate transition-colors">
                       {workflow.title}
                     </div>
                     <div className="text-xs text-slate-500 mt-1">
@@ -123,10 +126,18 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
           {examplePrompts.map((prompt, index) => (
             <div
               key={index}
-              className="text-sm text-slate-600 p-3 bg-slate-50 rounded cursor-pointer hover:bg-slate-100 transition-colors"
+              className="text-sm text-slate-600 p-4 bg-slate-50 rounded-lg cursor-pointer hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:border-blue-200 border border-transparent transition-all duration-200 hover:shadow-sm group"
               onClick={() => handlePromptClick(prompt)}
             >
-              "{prompt}"
+              <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-slate-400 rounded-full mt-2 group-hover:bg-blue-500 transition-colors"></div>
+                <span className="group-hover:text-slate-800 transition-colors leading-relaxed">
+                  "{prompt}"
+                </span>
+              </div>
+              <div className="mt-2 text-xs text-slate-400 group-hover:text-blue-600 transition-colors opacity-0 group-hover:opacity-100">
+                Click to try this example →
+              </div>
             </div>
           ))}
         </div>
