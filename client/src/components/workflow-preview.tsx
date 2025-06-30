@@ -147,17 +147,71 @@ export function WorkflowPreview({ workflow, className = "" }: WorkflowPreviewPro
   };
 
   const getNodeIcon = (nodeType: string) => {
-    if (nodeType.includes('Trigger')) return <Zap className="w-4 h-4" />;
-    if (nodeType.includes('HTTP') || nodeType.includes('Webhook')) return <Globe className="w-4 h-4" />;
-    if (nodeType.includes('Database') || nodeType.includes('MySQL') || nodeType.includes('Postgres')) return <Database className="w-4 h-4" />;
-    if (nodeType.includes('Slack') || nodeType.includes('Discord') || nodeType.includes('Teams')) return <MessageSquare className="w-4 h-4" />;
-    return <Settings className="w-4 h-4" />;
+    const type = nodeType.toLowerCase();
+    
+    // Enhanced icons with brand recognition
+    if (type.includes('slack')) return '💬';
+    if (type.includes('gmail') || type.includes('email')) return '📧';
+    if (type.includes('sheets')) return '📊';
+    if (type.includes('airtable')) return '🗃️';
+    if (type.includes('notion')) return '📝';
+    if (type.includes('discord')) return '🎮';
+    if (type.includes('twitter')) return '🐦';
+    if (type.includes('dropbox')) return '📦';
+    if (type.includes('drive')) return '📁';
+    if (type.includes('webhook') || type.includes('http')) return '🔗';
+    if (type.includes('trigger')) return '⚡';
+    if (type.includes('cron') || type.includes('schedule')) return '⏰';
+    if (type.includes('filter')) return '🔍';
+    if (type.includes('if')) return '❓';
+    if (type.includes('set')) return '⚙️';
+    if (type.includes('code')) return '💻';
+    
+    return '⚡';
   };
 
-  const getNodeColor = (node: AnimatedNode) => {
-    if (node.isCompleted) return 'bg-green-500 border-green-600 text-white';
-    if (node.isActive) return 'bg-blue-500 border-blue-600 text-white animate-pulse';
+  const getNodeBrandColor = (node: AnimatedNode) => {
+    const type = node.type.toLowerCase();
+    
+    if (node.isCompleted) {
+      return 'bg-gradient-to-br from-green-500 to-green-600 border-green-600 text-white shadow-lg';
+    }
+    if (node.isActive) {
+      return 'bg-gradient-to-br from-blue-500 to-blue-600 border-blue-600 text-white animate-pulse shadow-xl';
+    }
+    
+    // Brand colors for inactive state
+    if (type.includes('slack')) return 'bg-gradient-to-br from-purple-50 to-purple-100 border-purple-300 text-purple-700 hover:border-purple-400';
+    if (type.includes('gmail')) return 'bg-gradient-to-br from-red-50 to-red-100 border-red-300 text-red-700 hover:border-red-400';
+    if (type.includes('sheets')) return 'bg-gradient-to-br from-green-50 to-green-100 border-green-300 text-green-700 hover:border-green-400';
+    if (type.includes('airtable')) return 'bg-gradient-to-br from-orange-50 to-orange-100 border-orange-300 text-orange-700 hover:border-orange-400';
+    if (type.includes('notion')) return 'bg-gradient-to-br from-gray-50 to-gray-100 border-gray-300 text-gray-700 hover:border-gray-400';
+    if (type.includes('discord')) return 'bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-300 text-indigo-700 hover:border-indigo-400';
+    if (type.includes('twitter')) return 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-300 text-blue-700 hover:border-blue-400';
+    
     return 'bg-white border-slate-300 text-slate-700 hover:border-slate-400';
+  };
+
+  const getServiceName = (nodeType: string): string => {
+    const type = nodeType.toLowerCase();
+    
+    if (type.includes('slack')) return 'Slack';
+    if (type.includes('gmail')) return 'Gmail';
+    if (type.includes('sheets')) return 'Sheets';
+    if (type.includes('airtable')) return 'Airtable';
+    if (type.includes('notion')) return 'Notion';
+    if (type.includes('discord')) return 'Discord';
+    if (type.includes('twitter')) return 'Twitter';
+    if (type.includes('dropbox')) return 'Dropbox';
+    if (type.includes('drive')) return 'Drive';
+    if (type.includes('webhook')) return 'Webhook';
+    if (type.includes('trigger')) return 'Trigger';
+    if (type.includes('filter')) return 'Filter';
+    if (type.includes('if')) return 'Condition';
+    if (type.includes('set')) return 'Transform';
+    if (type.includes('code')) return 'Code';
+    
+    return nodeType.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim() || 'Node';
   };
 
   return (
@@ -196,7 +250,7 @@ export function WorkflowPreview({ workflow, className = "" }: WorkflowPreviewPro
       <CardContent>
         <div 
           ref={canvasRef}
-          className="relative bg-slate-50 rounded-lg overflow-hidden"
+          className="relative bg-gradient-to-br from-slate-50 to-blue-50 rounded-lg overflow-hidden border border-slate-200"
           style={{ 
             minHeight: '400px',
             height: `${Math.max(400, Math.ceil(animatedNodes.length / Math.ceil(Math.sqrt(animatedNodes.length))) * 120 + 160)}px`
@@ -256,7 +310,7 @@ export function WorkflowPreview({ workflow, className = "" }: WorkflowPreviewPro
             ))}
           </svg>
 
-          {/* Nodes */}
+          {/* Enhanced Nodes with Brand Styling */}
           {animatedNodes.map((node, index) => (
             <div
               key={node.id}
@@ -270,9 +324,9 @@ export function WorkflowPreview({ workflow, className = "" }: WorkflowPreviewPro
               }}
             >
               <div className={`
-                relative p-3 rounded-lg border-2 shadow-lg transition-all duration-300
-                ${getNodeColor(node)}
-                ${node.isActive ? 'shadow-xl' : 'shadow-md'}
+                relative p-4 rounded-xl border-2 shadow-lg transition-all duration-300
+                ${getNodeBrandColor(node)}
+                ${node.isActive ? 'shadow-2xl' : 'shadow-md'}
               `}>
                 {/* Execution indicator */}
                 {node.isActive && (
@@ -284,21 +338,30 @@ export function WorkflowPreview({ workflow, className = "" }: WorkflowPreviewPro
                   </div>
                 )}
 
-                <div className="flex items-center space-x-2 mb-2">
-                  {getNodeIcon(node.type)}
-                  <Badge variant={node.isCompleted ? "default" : "secondary"} className="text-xs">
-                    {node.type.split('.').pop()}
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="text-2xl">
+                    {getNodeIcon(node.type)}
+                  </div>
+                  <Badge 
+                    variant={node.isCompleted ? "default" : "secondary"} 
+                    className="text-xs font-medium"
+                  >
+                    {getServiceName(node.type)}
                   </Badge>
                 </div>
                 
-                <div className="text-sm font-medium truncate max-w-32">
+                <div className="text-sm font-semibold truncate max-w-36 mb-1">
                   {node.name}
+                </div>
+                
+                <div className="text-xs opacity-75">
+                  {node.isCompleted ? 'Completed' : node.isActive ? 'Executing...' : 'Ready'}
                 </div>
                 
                 {/* Progress indicator */}
                 {node.isActive && (
-                  <div className="mt-2 w-full bg-white bg-opacity-30 rounded-full h-1">
-                    <div className="bg-white h-1 rounded-full animate-pulse w-full" />
+                  <div className="mt-3 w-full bg-white bg-opacity-30 rounded-full h-1.5">
+                    <div className="bg-white h-1.5 rounded-full animate-pulse w-full" />
                   </div>
                 )}
               </div>
@@ -306,17 +369,17 @@ export function WorkflowPreview({ workflow, className = "" }: WorkflowPreviewPro
           ))}
 
           {/* Execution Status */}
-          <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-lg p-3 border">
-            <div className="flex items-center space-x-2 text-sm">
+          <div className="absolute bottom-4 left-4 bg-white rounded-xl shadow-lg p-4 border border-slate-200">
+            <div className="flex items-center space-x-3 text-sm">
               <div className="flex items-center space-x-2">
-                <div className={`w-2 h-2 rounded-full ${
+                <div className={`w-3 h-3 rounded-full ${
                   isPlaying ? 'bg-blue-500 animate-pulse' : 'bg-slate-400'
                 }`} />
                 <span className="font-medium">
                   {isPlaying ? 'Executing' : 'Ready'}
                 </span>
               </div>
-              <span className="text-slate-500">•</span>
+              <span className="text-slate-400">•</span>
               <span className="text-slate-600">
                 Step {currentStep + 1} of {animatedNodes.length}
               </span>
@@ -324,17 +387,17 @@ export function WorkflowPreview({ workflow, className = "" }: WorkflowPreviewPro
           </div>
 
           {/* Performance Metrics */}
-          <div className="absolute bottom-4 right-4 bg-white rounded-lg shadow-lg p-3 border">
-            <div className="text-xs text-slate-600 space-y-1">
-              <div className="flex justify-between space-x-4">
-                <span>Estimated Duration:</span>
+          <div className="absolute bottom-4 right-4 bg-white rounded-xl shadow-lg p-4 border border-slate-200">
+            <div className="text-xs text-slate-600 space-y-2">
+              <div className="flex justify-between space-x-6">
+                <span>Duration:</span>
                 <span className="font-medium">{(animatedNodes.length * 1.2).toFixed(1)}s</span>
               </div>
-              <div className="flex justify-between space-x-4">
+              <div className="flex justify-between space-x-6">
                 <span>Nodes:</span>
                 <span className="font-medium">{animatedNodes.length}</span>
               </div>
-              <div className="flex justify-between space-x-4">
+              <div className="flex justify-between space-x-6">
                 <span>Connections:</span>
                 <span className="font-medium">{connections.length}</span>
               </div>
@@ -343,28 +406,34 @@ export function WorkflowPreview({ workflow, className = "" }: WorkflowPreviewPro
         </div>
 
         {/* Execution Log */}
-        <div className="mt-4 space-y-2">
+        <div className="mt-6 space-y-3">
           <h4 className="text-sm font-medium text-slate-700">Execution Timeline</h4>
-          <div className="space-y-1 max-h-32 overflow-y-auto">
+          <div className="space-y-2 max-h-32 overflow-y-auto">
             {animatedNodes.map((node, index) => (
               <div 
                 key={node.id}
-                className={`text-xs p-2 rounded flex items-center space-x-2 transition-all duration-300 ${
+                className={`text-xs p-3 rounded-lg flex items-center space-x-3 transition-all duration-300 ${
                   node.isCompleted 
-                    ? 'bg-green-50 text-green-800' 
+                    ? 'bg-green-50 text-green-800 border border-green-200' 
                     : node.isActive 
-                      ? 'bg-blue-50 text-blue-800 animate-pulse' 
-                      : 'bg-slate-50 text-slate-500'
+                      ? 'bg-blue-50 text-blue-800 animate-pulse border border-blue-200' 
+                      : 'bg-slate-50 text-slate-500 border border-slate-200'
                 }`}
               >
-                <div className={`w-2 h-2 rounded-full ${
+                <div className="text-lg">
+                  {getNodeIcon(node.type)}
+                </div>
+                <div className={`w-3 h-3 rounded-full ${
                   node.isCompleted 
                     ? 'bg-green-500' 
                     : node.isActive 
                       ? 'bg-blue-500' 
                       : 'bg-slate-300'
                 }`} />
-                <span className="flex-1">{node.name}</span>
+                <span className="flex-1 font-medium">{node.name}</span>
+                <Badge variant="outline" className="text-xs">
+                  {getServiceName(node.type)}
+                </Badge>
                 <span className="text-xs opacity-60">
                   {node.isCompleted ? 'Completed' : node.isActive ? 'Executing...' : 'Pending'}
                 </span>
