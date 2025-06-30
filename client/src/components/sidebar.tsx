@@ -41,7 +41,10 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
   return (
     <aside className="w-full bg-white flex flex-col h-full">
       <div className="p-8 border-b border-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900 mb-6">Quick Templates</h2>
+        {/* Enhanced Section Header */}
+        <h2 className="text-xl font-bold text-slate-900 mb-6 uppercase tracking-wider" style={{ letterSpacing: '0.05em' }}>
+          Quick Templates
+        </h2>
         
         <div className="space-y-4">
           {isLoading ? (
@@ -62,7 +65,7 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
                 <div className="flex items-start space-x-3">
                   <Sparkles className="w-4 h-4 text-blue-500 mt-1 group-hover:text-primary transition-colors" />
                   <div>
-                    <div className="font-medium text-slate-900 group-hover:text-primary transition-colors">
+                    <div className="font-semibold text-slate-900 group-hover:text-primary transition-colors">
                       {template.name}
                     </div>
                     <div className="text-sm text-slate-500 mt-1 group-hover:text-slate-600 transition-colors">
@@ -76,11 +79,11 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
         </div>
       </div>
       
-      {/* Recent Workflows Section with increased spacing */}
+      {/* Recent Workflows Section with enhanced typography */}
       {recentWorkflows.length > 0 && (
         <div className="p-8 border-b border-slate-200 recent-workflows">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide">
+            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest" style={{ letterSpacing: '0.05em' }}>
               Recent Workflows
             </h3>
             <Button
@@ -104,7 +107,7 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
                 <div className="flex items-start space-x-2 w-full">
                   <Clock className="w-3 h-3 text-slate-400 mt-1 flex-shrink-0 group-hover:text-blue-500 transition-colors" />
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-slate-900 group-hover:text-primary truncate transition-colors">
+                    <div className="text-sm font-semibold text-slate-900 group-hover:text-primary truncate transition-colors">
                       {workflow.title}
                     </div>
                     <div className="text-xs text-slate-500 mt-1">
@@ -119,7 +122,8 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
       )}
       
       <div className="p-8 flex-1">
-        <h3 className="text-sm font-semibold text-slate-900 mb-4 uppercase tracking-wide">
+        {/* Enhanced Section Header */}
+        <h3 className="text-sm font-bold text-slate-900 mb-4 uppercase tracking-widest" style={{ letterSpacing: '0.05em' }}>
           Example Prompts
         </h3>
         <div className="space-y-3">

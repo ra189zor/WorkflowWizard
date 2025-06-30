@@ -59,7 +59,9 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
     return (
       <div className="w-full bg-white flex flex-col h-full">
         <div className="p-8 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-900">Generating Workflow</h3>
+          <h3 className="text-xl font-bold text-slate-900 uppercase tracking-wider" style={{ letterSpacing: '0.05em' }}>
+            Generating Workflow
+          </h3>
         </div>
         
         <div className="flex-1 flex items-center justify-center">
@@ -77,8 +79,10 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
     return (
       <div className="w-full bg-white flex flex-col h-full">
         <div className="p-8 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-900">Generated Workflow</h3>
-          <p className="text-sm text-slate-500 mt-1">n8n JSON Configuration</p>
+          <h3 className="text-xl font-bold text-slate-900 uppercase tracking-wider" style={{ letterSpacing: '0.05em' }}>
+            Generated Workflow
+          </h3>
+          <p className="text-sm text-slate-500 mt-2">n8n JSON Configuration</p>
         </div>
         
         <div className="flex-1 flex items-center justify-center">
@@ -109,8 +113,10 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
       <div className="p-8 border-b border-slate-200">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-lg font-semibold text-slate-900">Generated Workflow</h3>
-            <p className="text-sm text-slate-500 mt-1">n8n JSON Configuration</p>
+            <h3 className="text-xl font-bold text-slate-900 uppercase tracking-wider" style={{ letterSpacing: '0.05em' }}>
+              Generated Workflow
+            </h3>
+            <p className="text-sm text-slate-500 mt-2">n8n JSON Configuration</p>
           </div>
           <div className="flex space-x-2">
             <Button
@@ -133,38 +139,38 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
         </div>
       </div>
 
-      {/* Workflow Stats with increased padding */}
+      {/* Workflow Stats with enhanced typography */}
       <div className="p-8 border-b border-slate-200">
         <div className="grid grid-cols-2 gap-6 mb-6">
           <Card>
             <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-primary">{nodeCount}</div>
-              <div className="text-xs text-slate-600">Nodes</div>
+              <div className="text-xs text-slate-600 font-semibold uppercase tracking-wide">Nodes</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-green-600">{integrations.length}</div>
-              <div className="text-xs text-slate-600">Integrations</div>
+              <div className="text-xs text-slate-600 font-semibold uppercase tracking-wide">Integrations</div>
             </CardContent>
           </Card>
         </div>
       </div>
 
-      {/* Workflow Tabs with increased padding */}
+      {/* Workflow Tabs with enhanced typography */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="p-8 border-b border-slate-200 flex-shrink-0">
           <Tabs defaultValue="preview" className="w-full h-full flex flex-col">
             <TabsList className="grid w-full grid-cols-3 flex-shrink-0">
-              <TabsTrigger value="preview" className="flex items-center space-x-2">
+              <TabsTrigger value="preview" className="flex items-center space-x-2 font-semibold">
                 <Play className="w-4 h-4" />
                 <span>Preview</span>
               </TabsTrigger>
-              <TabsTrigger value="analysis" className="flex items-center space-x-2">
+              <TabsTrigger value="analysis" className="flex items-center space-x-2 font-semibold">
                 <BarChart3 className="w-4 h-4" />
                 <span>Analysis</span>
               </TabsTrigger>
-              <TabsTrigger value="overview" className="flex items-center space-x-2">
+              <TabsTrigger value="overview" className="flex items-center space-x-2 font-semibold">
                 <ExternalLink className="w-4 h-4" />
                 <span>Overview</span>
               </TabsTrigger>
@@ -183,7 +189,9 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
                 <Card className="h-full">
                   <CardContent className="p-6 h-full overflow-auto">
                     <div className="flex items-center justify-between mb-6">
-                      <h4 className="text-sm font-semibold text-slate-900">Workflow Structure</h4>
+                      <h4 className="text-lg font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
+                        Workflow Structure
+                      </h4>
                       <Button
                         variant="outline"
                         size="sm"
@@ -211,16 +219,18 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
         </div>
       </div>
 
-        {/* Integration Requirements with increased padding */}
+        {/* Integration Requirements with enhanced typography */}
         {integrations.length > 0 && (
           <div className="p-8 border-b border-slate-200 flex-shrink-0">
-            <h4 className="text-sm font-semibold text-slate-900 mb-4">Required Integrations</h4>
+            <h4 className="text-lg font-bold text-slate-900 mb-4 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
+              Required Integrations
+            </h4>
             <div className="space-y-3 max-h-32 overflow-y-auto">
               {integrations.map((integration, index) => (
                 <div key={index} className="flex items-center space-x-3 p-3 bg-orange-50 rounded-lg">
                   <div className="w-2 h-2 bg-orange-500 rounded-full" />
-                  <span className="text-sm text-slate-700 capitalize">{integration}</span>
-                  <span className="ml-auto px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded">
+                  <span className="text-sm text-slate-700 capitalize font-medium">{integration}</span>
+                  <span className="ml-auto px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded font-semibold">
                     Auth Required
                   </span>
                 </div>
@@ -229,10 +239,12 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
           </div>
         )}
 
-        {/* JSON Display */}
+        {/* JSON Display with enhanced typography */}
         <div className="flex-1 overflow-hidden flex flex-col min-h-0">
           <div className="p-6 bg-slate-50 border-b border-slate-200 flex-shrink-0 flex items-center justify-between">
-            <h4 className="text-sm font-semibold text-slate-900">n8n Workflow JSON</h4>
+            <h4 className="text-lg font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
+              n8n Workflow JSON
+            </h4>
             <div className="flex space-x-2">
               <Button
                 variant="ghost"
@@ -268,20 +280,20 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
           </div>
         </div>
 
-        {/* Action Buttons with increased padding */}
+        {/* Action Buttons with enhanced typography */}
         <div className="p-8 border-t border-slate-200 flex-shrink-0">
           <div className="grid grid-cols-2 gap-4">
             <Button
               variant="outline"
               onClick={copyToClipboard}
-              className="flex items-center justify-center"
+              className="flex items-center justify-center font-semibold"
             >
               <Copy className="w-4 h-4 mr-2" />
               Copy JSON
             </Button>
             <Button
               onClick={downloadWorkflow}
-              className="flex items-center justify-center"
+              className="flex items-center justify-center font-semibold"
             >
               <Download className="w-4 h-4 mr-2" />
               Download

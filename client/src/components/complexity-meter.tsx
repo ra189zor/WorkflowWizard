@@ -196,13 +196,15 @@ export function ComplexityMeter({ workflow, className = "" }: ComplexityMeterPro
       <Card className={`${className}`}>
         <CardContent className="p-4">
           <div className="space-y-4">
-            {/* Header */}
+            {/* Enhanced Header */}
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Layers className="w-5 h-5 text-slate-600" />
-                <h3 className="font-semibold text-slate-900">Complexity Analysis</h3>
+                <h3 className="text-lg font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
+                  Complexity Analysis
+                </h3>
               </div>
-              <Badge className={`${getLevelColor(analysis.level)} flex items-center space-x-1`}>
+              <Badge className={`${getLevelColor(analysis.level)} flex items-center space-x-1 font-semibold`}>
                 {getLevelIcon(analysis.level)}
                 <span>{analysis.level}</span>
               </Badge>
@@ -211,8 +213,8 @@ export function ComplexityMeter({ workflow, className = "" }: ComplexityMeterPro
             {/* Progress Bar */}
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-600">Complexity Score</span>
-                <span className="font-medium">{analysis.score}/100</span>
+                <span className="text-slate-600 font-semibold">Complexity Score</span>
+                <span className="font-bold">{analysis.score}/100</span>
               </div>
               <div className="relative">
                 <Progress value={analysis.score} className="h-2" />
@@ -228,28 +230,30 @@ export function ComplexityMeter({ workflow, className = "" }: ComplexityMeterPro
               <div className="flex items-center space-x-2">
                 <Clock className="w-4 h-4 text-slate-500" />
                 <div>
-                  <div className="text-slate-600">Setup Time</div>
-                  <div className="font-medium">{analysis.estimatedSetupTime}</div>
+                  <div className="text-slate-600 font-semibold uppercase text-xs tracking-wide">Setup Time</div>
+                  <div className="font-bold">{analysis.estimatedSetupTime}</div>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
                 <Network className="w-4 h-4 text-slate-500" />
                 <div>
-                  <div className="text-slate-600">Skill Level</div>
-                  <div className="font-medium">{analysis.skillLevel}</div>
+                  <div className="text-slate-600 font-semibold uppercase text-xs tracking-wide">Skill Level</div>
+                  <div className="font-bold">{analysis.skillLevel}</div>
                 </div>
               </div>
             </div>
 
             {/* Complexity Factors */}
             <div className="space-y-2">
-              <h4 className="text-sm font-medium text-slate-700">Complexity Factors</h4>
+              <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
+                Complexity Factors
+              </h4>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="flex justify-between p-2 bg-slate-50 rounded">
-                      <span>Nodes</span>
-                      <span className="font-medium">{analysis.factors.nodeCount}</span>
+                      <span className="font-semibold">Nodes</span>
+                      <span className="font-bold">{analysis.factors.nodeCount}</span>
                     </div>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -260,8 +264,8 @@ export function ComplexityMeter({ workflow, className = "" }: ComplexityMeterPro
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="flex justify-between p-2 bg-slate-50 rounded">
-                      <span>Integrations</span>
-                      <span className="font-medium">{analysis.factors.integrationCount}</span>
+                      <span className="font-semibold">Integrations</span>
+                      <span className="font-bold">{analysis.factors.integrationCount}</span>
                     </div>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -272,8 +276,8 @@ export function ComplexityMeter({ workflow, className = "" }: ComplexityMeterPro
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="flex justify-between p-2 bg-slate-50 rounded">
-                      <span>Logic</span>
-                      <span className="font-medium">{analysis.factors.conditionalLogic}</span>
+                      <span className="font-semibold">Logic</span>
+                      <span className="font-bold">{analysis.factors.conditionalLogic}</span>
                     </div>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -284,8 +288,8 @@ export function ComplexityMeter({ workflow, className = "" }: ComplexityMeterPro
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="flex justify-between p-2 bg-slate-50 rounded">
-                      <span>Transforms</span>
-                      <span className="font-medium">{analysis.factors.dataTransformation}</span>
+                      <span className="font-semibold">Transforms</span>
+                      <span className="font-bold">{analysis.factors.dataTransformation}</span>
                     </div>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -297,7 +301,7 @@ export function ComplexityMeter({ workflow, className = "" }: ComplexityMeterPro
 
             {/* Recommendations */}
             <div className="space-y-2">
-              <h4 className="text-sm font-medium text-slate-700 flex items-center space-x-1">
+              <h4 className="text-sm font-bold text-slate-700 flex items-center space-x-1 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
                 <Info className="w-4 h-4" />
                 <span>Recommendations</span>
               </h4>
