@@ -181,7 +181,7 @@ Feel free to try again with a modified request!`;
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full">
+    <div className="flex-1 flex flex-col h-full" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
       {/* Chat Messages with increased padding */}
       <div className="flex-1 overflow-y-auto p-8 space-y-8">
         <div className="max-w-2xl mx-auto space-y-8">
@@ -192,7 +192,10 @@ Feel free to try again with a modified request!`;
               <div className="max-w-2xl">
                 <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-blue-200">
                   <CardContent className="p-8">
-                    <div className="whitespace-pre-wrap text-slate-700">
+                    <div className="whitespace-pre-wrap text-slate-700" style={{ 
+                      fontFamily: 'Inter, sans-serif',
+                      lineHeight: '1.6'
+                    }}>
                       <TypingAnimation 
                         text={welcomeText}
                         speed={30}
@@ -222,7 +225,10 @@ Feel free to try again with a modified request!`;
                       : 'shadow-md'
                 }>
                   <CardContent className="p-6">
-                    <div className="whitespace-pre-wrap leading-relaxed">
+                    <div className="whitespace-pre-wrap leading-relaxed" style={{ 
+                      fontFamily: 'Inter, sans-serif',
+                      lineHeight: '1.6'
+                    }}>
                       {message.content}
                     </div>
                     {message.workflowData && (
@@ -230,15 +236,16 @@ Feel free to try again with a modified request!`;
                         <Button
                           size="sm"
                           variant={message.role === 'user' ? 'secondary' : 'default'}
-                          className="text-xs"
+                          className="text-xs font-medium"
                           onClick={() => handleViewWorkflow(message.workflowData)}
+                          style={{ fontFamily: 'Inter, sans-serif' }}
                         >
                           View Workflow
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
-                          className="text-xs"
+                          className="text-xs font-medium"
                           onClick={() => {
                             const blob = new Blob([JSON.stringify(message.workflowData, null, 2)], { 
                               type: 'application/json' 
@@ -252,6 +259,7 @@ Feel free to try again with a modified request!`;
                             document.body.removeChild(a);
                             URL.revokeObjectURL(url);
                           }}
+                          style={{ fontFamily: 'Inter, sans-serif' }}
                         >
                           Download JSON
                         </Button>
@@ -297,6 +305,7 @@ Feel free to try again with a modified request!`;
                 onKeyDown={handleKeyDown}
                 placeholder="Describe your automation needs in plain English..."
                 className="resize-none border-slate-200 focus:border-primary focus:ring-primary shadow-sm"
+                style={{ fontFamily: 'Inter, sans-serif' }}
                 rows={3}
               />
             </div>
@@ -304,7 +313,8 @@ Feel free to try again with a modified request!`;
             <Button
               onClick={handleSendMessage}
               disabled={!inputMessage.trim() || isGenerating}
-              className="self-end bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg hover:shadow-xl transition-all duration-200 px-6 py-3 h-auto flex items-center space-x-2 font-semibold"
+              className="self-end bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg hover:shadow-xl transition-all duration-200 px-6 py-3 h-auto flex items-center space-x-2 font-medium"
+              style={{ fontFamily: 'Inter, sans-serif' }}
             >
               {isGenerating ? (
                 <>
@@ -327,7 +337,7 @@ Feel free to try again with a modified request!`;
             </div>
           )}
           
-          <div className="mt-3 text-xs text-slate-500 flex items-center justify-between">
+          <div className="mt-3 text-xs text-slate-500 flex items-center justify-between" style={{ fontFamily: 'Inter, sans-serif' }}>
             <span>Press Enter to send, Shift+Enter for new line</span>
             <span className="text-slate-400">Powered by AI</span>
           </div>

@@ -34,8 +34,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Enhanced Header with Improved Spacing and Alignment */}
+    <div className="min-h-screen bg-slate-50" style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+      {/* Enhanced Header with Refined Typography */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="flex justify-between items-center h-20">
@@ -43,14 +43,24 @@ export default function Home() {
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
                 WW
               </div>
-              <h1 className="text-2xl font-bold text-slate-900 uppercase tracking-wider" style={{ letterSpacing: '0.08em' }}>
-                WorkflowWizard
+              {/* Refined Typography with Hierarchy and Spacing */}
+              <h1 className="text-2xl text-slate-900" style={{ 
+                fontFamily: 'Inter, system-ui, sans-serif',
+                fontWeight: '700',
+                letterSpacing: '0.02em'
+              }}>
+                <span className="font-bold">Workflow</span>
+                <span className="font-normal ml-1">Wizard</span>
               </h1>
             </div>
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-slate-600 hover:text-slate-900 font-semibold transition-colors">Templates</a>
-              <a href="#" className="text-slate-600 hover:text-slate-900 font-semibold transition-colors">Docs</a>
-              <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl">
+              <a href="#" className="text-slate-600 hover:text-slate-900 font-medium transition-colors" style={{ fontFamily: 'Inter, sans-serif' }}>
+                Templates
+              </a>
+              <a href="#" className="text-slate-600 hover:text-slate-900 font-medium transition-colors" style={{ fontFamily: 'Inter, sans-serif' }}>
+                Docs
+              </a>
+              <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl" style={{ fontFamily: 'Inter, sans-serif' }}>
                 Sign In
               </button>
             </nav>
@@ -58,10 +68,10 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Layout with Enhanced Spacing and Visual Hierarchy */}
+      {/* Main Layout with Enhanced Typography Throughout */}
       <div className="h-[calc(100vh-5rem)] p-8 lg:p-12">
         <div className="h-full grid grid-cols-[340px_1fr_640px] gap-8 max-w-[1900px] mx-auto">
-          {/* Left Sidebar - Enhanced with Better Spacing */}
+          {/* Left Sidebar - Enhanced with Better Typography */}
           <div className="sidebar bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
             <Sidebar onSelectTemplate={setSelectedWorkflow} />
           </div>

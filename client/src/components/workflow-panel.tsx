@@ -97,10 +97,15 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
 
   if (isGenerating) {
     return (
-      <div className="w-full bg-white flex flex-col h-full">
+      <div className="w-full bg-white flex flex-col h-full" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
         <div className="p-8 border-b border-slate-200">
-          <h3 className="text-xl font-bold text-slate-900 uppercase tracking-wider" style={{ letterSpacing: '0.05em' }}>
-            Generating Workflow
+          <h3 className="text-xl text-slate-900" style={{ 
+            fontFamily: 'Inter, sans-serif',
+            fontWeight: '700',
+            letterSpacing: '0.025em'
+          }}>
+            <span className="font-bold">Generating</span>
+            <span className="font-normal ml-1">Workflow</span>
           </h3>
         </div>
         
@@ -115,13 +120,17 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
               <Sparkles className="absolute -top-2 -right-2 w-6 h-6 text-yellow-400 animate-bounce" />
             </div>
             
-            <h4 className="text-xl font-bold text-slate-900 mb-3">Creating Your Automation</h4>
+            <h4 className="text-xl font-bold text-slate-900 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Creating Your Automation
+            </h4>
             <div className="space-y-2 text-slate-600 max-w-md mx-auto">
               <div className="flex items-center justify-center space-x-2">
                 <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
-                <span className="text-sm">Analyzing your request...</span>
+                <span className="text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>Analyzing your request...</span>
               </div>
-              <div className="text-sm opacity-75">Building the perfect n8n workflow for you</div>
+              <div className="text-sm opacity-75" style={{ fontFamily: 'Inter, sans-serif' }}>
+                Building the perfect n8n workflow for you
+              </div>
             </div>
             
             {/* Progress indicators */}
@@ -135,7 +144,7 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
                   />
                 ))}
               </div>
-              <div className="text-xs text-slate-500">
+              <div className="text-xs text-slate-500" style={{ fontFamily: 'Inter, sans-serif' }}>
                 This usually takes 5-10 seconds
               </div>
             </div>
@@ -147,12 +156,19 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
 
   if (!workflow) {
     return (
-      <div className="w-full bg-white flex flex-col h-full">
+      <div className="w-full bg-white flex flex-col h-full" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
         <div className="p-8 border-b border-slate-200">
-          <h3 className="text-xl font-bold text-slate-900 uppercase tracking-wider" style={{ letterSpacing: '0.05em' }}>
-            Generated Workflow
+          <h3 className="text-xl text-slate-900" style={{ 
+            fontFamily: 'Inter, sans-serif',
+            fontWeight: '700',
+            letterSpacing: '0.025em'
+          }}>
+            <span className="font-bold">Generated</span>
+            <span className="font-normal ml-1">Workflow</span>
           </h3>
-          <p className="text-sm text-slate-500 mt-2">n8n JSON Configuration</p>
+          <p className="text-sm text-slate-500 mt-2" style={{ fontFamily: 'Inter, sans-serif' }}>
+            n8n JSON Configuration
+          </p>
         </div>
         
         <div className="flex-1 flex items-center justify-center">
@@ -162,8 +178,12 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
                 n8
               </div>
             </div>
-            <h4 className="text-lg font-semibold text-slate-900 mb-2">No Workflow Generated</h4>
-            <p className="text-slate-600">Describe your automation needs to get started.</p>
+            <h4 className="text-lg font-semibold text-slate-900 mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>
+              No Workflow Generated
+            </h4>
+            <p className="text-slate-600" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Describe your automation needs to get started.
+            </p>
           </div>
         </div>
       </div>
@@ -179,15 +199,22 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
   ));
 
   return (
-    <div className="w-full bg-white flex flex-col h-full">
-      {/* Header - Always visible */}
+    <div className="w-full bg-white flex flex-col h-full" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+      {/* Header - Always visible with Enhanced Typography */}
       <div className="p-8 border-b border-slate-200">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-xl font-bold text-slate-900 uppercase tracking-wider" style={{ letterSpacing: '0.05em' }}>
-              Generated Workflow
+            <h3 className="text-xl text-slate-900" style={{ 
+              fontFamily: 'Inter, sans-serif',
+              fontWeight: '700',
+              letterSpacing: '0.025em'
+            }}>
+              <span className="font-bold">Generated</span>
+              <span className="font-normal ml-1">Workflow</span>
             </h3>
-            <p className="text-sm text-slate-500 mt-2">n8n JSON Configuration</p>
+            <p className="text-sm text-slate-500 mt-2" style={{ fontFamily: 'Inter, sans-serif' }}>
+              n8n JSON Configuration
+            </p>
           </div>
           <div className="flex space-x-2">
             <Button
@@ -210,7 +237,7 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
         </div>
       </div>
 
-      {/* Animated Content */}
+      {/* Animated Content with Enhanced Typography */}
       {showWorkflow && (
         <>
           {/* Workflow Stats - Animated Step 2 */}
@@ -225,19 +252,29 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
               <Card className="transform transition-all duration-500" style={{ animationDelay: '100ms' }}>
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-primary animate-pulse">{nodeCount}</div>
-                  <div className="text-xs text-slate-600 font-semibold uppercase tracking-wide">Nodes</div>
+                  <div className="text-xs text-slate-600 font-semibold" style={{ 
+                    fontFamily: 'Inter, sans-serif',
+                    letterSpacing: '0.05em'
+                  }}>
+                    NODES
+                  </div>
                 </CardContent>
               </Card>
               <Card className="transform transition-all duration-500" style={{ animationDelay: '200ms' }}>
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-green-600 animate-pulse">{integrations.length}</div>
-                  <div className="text-xs text-slate-600 font-semibold uppercase tracking-wide">Integrations</div>
+                  <div className="text-xs text-slate-600 font-semibold" style={{ 
+                    fontFamily: 'Inter, sans-serif',
+                    letterSpacing: '0.05em'
+                  }}>
+                    INTEGRATIONS
+                  </div>
                 </CardContent>
               </Card>
             </div>
           </div>
 
-          {/* Workflow Tabs - Animated Step 2 */}
+          {/* Workflow Tabs - Animated Step 2 with Enhanced Typography */}
           <div 
             className={`flex-1 flex flex-col overflow-hidden transition-all duration-700 ${
               animationStep >= 2 
@@ -249,15 +286,15 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
             <div className="p-8 border-b border-slate-200 flex-shrink-0">
               <Tabs defaultValue="preview" className="w-full h-full flex flex-col">
                 <TabsList className="grid w-full grid-cols-3 flex-shrink-0">
-                  <TabsTrigger value="preview" className="flex items-center space-x-2 font-semibold">
+                  <TabsTrigger value="preview" className="flex items-center space-x-2 font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
                     <Play className="w-4 h-4" />
                     <span>Preview</span>
                   </TabsTrigger>
-                  <TabsTrigger value="analysis" className="flex items-center space-x-2 font-semibold">
+                  <TabsTrigger value="analysis" className="flex items-center space-x-2 font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
                     <BarChart3 className="w-4 h-4" />
                     <span>Analysis</span>
                   </TabsTrigger>
-                  <TabsTrigger value="overview" className="flex items-center space-x-2 font-semibold">
+                  <TabsTrigger value="overview" className="flex items-center space-x-2 font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
                     <ExternalLink className="w-4 h-4" />
                     <span>Overview</span>
                   </TabsTrigger>
@@ -276,8 +313,13 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
                     <Card className="h-full">
                       <CardContent className="p-6 h-full overflow-auto">
                         <div className="flex items-center justify-between mb-6">
-                          <h4 className="text-lg font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
-                            Workflow Structure
+                          <h4 className="text-lg text-slate-900" style={{ 
+                            fontFamily: 'Inter, sans-serif',
+                            fontWeight: '700',
+                            letterSpacing: '0.025em'
+                          }}>
+                            <span className="font-bold">Workflow</span>
+                            <span className="font-normal ml-1">Structure</span>
                           </h4>
                           <Button
                             variant="outline"
@@ -305,7 +347,7 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
             </div>
           </div>
 
-          {/* Integration Requirements - Animated Step 3 */}
+          {/* Integration Requirements - Animated Step 3 with Enhanced Typography */}
           {integrations.length > 0 && (
             <div 
               className={`p-8 border-b border-slate-200 flex-shrink-0 transition-all duration-700 ${
@@ -315,8 +357,13 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
               }`}
               style={{ animationDelay: '500ms' }}
             >
-              <h4 className="text-lg font-bold text-slate-900 mb-4 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
-                Required Integrations
+              <h4 className="text-lg text-slate-900 mb-4" style={{ 
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: '700',
+                letterSpacing: '0.025em'
+              }}>
+                <span className="font-bold">Required</span>
+                <span className="font-normal ml-1">Integrations</span>
               </h4>
               <div className="space-y-3 max-h-32 overflow-y-auto">
                 {integrations.map((integration, index) => (
@@ -328,8 +375,10 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
                     style={{ animationDelay: `${600 + index * 100}ms` }}
                   >
                     <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-                    <span className="text-sm text-slate-700 capitalize font-medium">{integration}</span>
-                    <span className="ml-auto px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded font-semibold">
+                    <span className="text-sm text-slate-700 capitalize font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      {integration}
+                    </span>
+                    <span className="ml-auto px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
                       Auth Required
                     </span>
                   </div>
@@ -338,7 +387,7 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
             </div>
           )}
 
-          {/* JSON Display - Animated Step 4 */}
+          {/* JSON Display - Animated Step 4 with Enhanced Typography */}
           <div 
             className={`flex-1 overflow-hidden flex flex-col min-h-0 transition-all duration-700 ${
               animationStep >= 4 
@@ -348,8 +397,13 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
             style={{ animationDelay: '700ms' }}
           >
             <div className="p-6 bg-slate-50 border-b border-slate-200 flex-shrink-0 flex items-center justify-between">
-              <h4 className="text-lg font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
-                n8n Workflow JSON
+              <h4 className="text-lg text-slate-900" style={{ 
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: '700',
+                letterSpacing: '0.025em'
+              }}>
+                <span className="font-bold">n8n Workflow</span>
+                <span className="font-normal ml-1">JSON</span>
               </h4>
               <div className="flex space-x-2">
                 <Button
@@ -378,7 +432,7 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
               </div>
             </div>
             <div className="flex-1 overflow-auto">
-              <pre className="p-6 text-xs bg-slate-900 text-slate-100 min-h-full leading-relaxed">
+              <pre className="p-6 text-xs bg-slate-900 text-slate-100 min-h-full leading-relaxed" style={{ fontFamily: 'JetBrains Mono, Consolas, Monaco, monospace' }}>
                 <code>
                   {JSON.stringify(workflow, null, 2)}
                 </code>
@@ -386,7 +440,7 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
             </div>
           </div>
 
-          {/* Action Buttons - Animated Step 4 */}
+          {/* Action Buttons - Animated Step 4 with Enhanced Typography */}
           <div 
             className={`p-8 border-t border-slate-200 flex-shrink-0 transition-all duration-700 ${
               animationStep >= 4 
@@ -399,14 +453,16 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
               <Button
                 variant="outline"
                 onClick={copyToClipboard}
-                className="flex items-center justify-center font-semibold transform transition-all duration-300 hover:scale-105"
+                className="flex items-center justify-center font-medium transform transition-all duration-300 hover:scale-105"
+                style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 <Copy className="w-4 h-4 mr-2" />
                 Copy JSON
               </Button>
               <Button
                 onClick={downloadWorkflow}
-                className="flex items-center justify-center font-semibold transform transition-all duration-300 hover:scale-105"
+                className="flex items-center justify-center font-medium transform transition-all duration-300 hover:scale-105"
+                style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 <Download className="w-4 h-4 mr-2" />
                 Download
