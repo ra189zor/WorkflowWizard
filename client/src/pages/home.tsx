@@ -5,6 +5,7 @@ import { WorkflowPanel } from "@/components/workflow-panel";
 import { WorkflowModal } from "@/components/workflow-modal";
 import { HowItWorksModal } from "@/components/how-it-works-modal";
 import { TutorialWalkthrough } from "@/components/tutorial-walkthrough";
+import { Github, ExternalLink } from "lucide-react";
 import type { N8nWorkflow } from "@/lib/types";
 
 export default function Home() {
@@ -33,9 +34,13 @@ export default function Home() {
     };
   }, []);
 
+  const handleGitHubClick = () => {
+    window.open('https://github.com/ra189zor/WorkflowWizard', '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="min-h-screen bg-slate-50" style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
-      {/* Modernized Header with Soft Drop Shadow */}
+      {/* Enhanced Header with Perfect Visual Balance */}
       <header 
         className="bg-white sticky top-0 z-50" 
         style={{ 
@@ -44,11 +49,11 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="flex justify-between items-center h-20">
+            {/* Left Side - Brand Identity */}
             <div className="flex items-center space-x-4">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
                 WW
               </div>
-              {/* Refined Typography with Hierarchy and Spacing */}
               <h1 className="text-2xl text-slate-900" style={{ 
                 fontFamily: 'Inter, system-ui, sans-serif',
                 fontWeight: '700',
@@ -58,17 +63,44 @@ export default function Home() {
                 <span className="font-normal ml-1">Wizard</span>
               </h1>
             </div>
+
+            {/* Right Side - Balanced Navigation with GitHub CTA */}
             <nav className="hidden md:flex items-center space-x-8">
+              {/* Secondary Navigation Links */}
               <a href="#" className="text-slate-600 hover:text-slate-900 font-medium transition-colors" style={{ fontFamily: 'Inter, sans-serif' }}>
                 Templates
               </a>
               <a href="#" className="text-slate-600 hover:text-slate-900 font-medium transition-colors" style={{ fontFamily: 'Inter, sans-serif' }}>
                 Docs
               </a>
+              
+              {/* GitHub CTA Button - Perfect for Judges */}
+              <button 
+                onClick={handleGitHubClick}
+                className="flex items-center space-x-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 rounded-lg font-medium transition-all duration-200 border border-slate-200 hover:border-slate-300 group"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span>View Source</span>
+                <ExternalLink className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity" />
+              </button>
+
+              {/* Primary CTA Button */}
               <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl" style={{ fontFamily: 'Inter, sans-serif' }}>
                 Sign In
               </button>
             </nav>
+
+            {/* Mobile Menu Button (for smaller screens) */}
+            <div className="md:hidden flex items-center space-x-3">
+              <button 
+                onClick={handleGitHubClick}
+                className="flex items-center space-x-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-all duration-200"
+              >
+                <Github className="w-4 h-4" />
+                <span className="text-sm font-medium">Source</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
