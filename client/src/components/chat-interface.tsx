@@ -172,17 +172,17 @@ Feel free to try again with a modified request!`;
   };
 
   return (
-    <div className="flex-1 flex flex-col">
-      {/* Chat Messages */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
-        <div className="max-w-2xl mx-auto space-y-6">
+    <div className="flex-1 flex flex-col h-full">
+      {/* Chat Messages with increased padding */}
+      <div className="flex-1 overflow-y-auto p-8 space-y-8">
+        <div className="max-w-2xl mx-auto space-y-8">
           {/* Typing Welcome Message */}
           {showTypingWelcome && (
             <div className="flex items-start space-x-4">
               <AIAvatar size="lg" animated className="shadow-xl" />
               <div className="max-w-2xl">
                 <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-blue-200">
-                  <CardContent className="p-6">
+                  <CardContent className="p-8">
                     <div className="whitespace-pre-wrap text-slate-700">
                       <TypingAnimation 
                         text={welcomeText}
@@ -212,12 +212,12 @@ Feel free to try again with a modified request!`;
                       ? 'bg-gradient-to-br from-blue-50 to-purple-50 border-blue-200 shadow-lg'
                       : 'shadow-md'
                 }>
-                  <CardContent className="p-4">
+                  <CardContent className="p-6">
                     <div className="whitespace-pre-wrap leading-relaxed">
                       {message.content}
                     </div>
                     {message.workflowData && (
-                      <div className="mt-3 flex space-x-3">
+                      <div className="mt-4 flex space-x-3">
                         <Button
                           size="sm"
                           variant={message.role === 'user' ? 'secondary' : 'default'}
@@ -251,7 +251,7 @@ Feel free to try again with a modified request!`;
             <div className="flex items-start space-x-4">
               <AIAvatar size="md" animated className="shadow-lg" />
               <Card className="shadow-md">
-                <CardContent className="p-4">
+                <CardContent className="p-6">
                   <DynamicLoading isLoading={isGenerating} />
                 </CardContent>
               </Card>
@@ -262,8 +262,8 @@ Feel free to try again with a modified request!`;
         </div>
       </div>
 
-      {/* Chat Input */}
-      <div className="border-t border-slate-200 p-6 bg-gradient-to-r from-slate-50 to-white">
+      {/* Chat Input with increased padding */}
+      <div className="border-t border-slate-200 p-8 bg-gradient-to-r from-slate-50 to-white">
         <div className="max-w-2xl mx-auto">
           <div className="flex space-x-4">
             <div className="flex-1">
@@ -292,12 +292,12 @@ Feel free to try again with a modified request!`;
           
           {/* Dynamic loading indicator below text area */}
           {isGenerating && (
-            <div className="mt-3">
+            <div className="mt-4">
               <DynamicLoading isLoading={isGenerating} className="justify-center" />
             </div>
           )}
           
-          <div className="mt-2 text-xs text-slate-500 flex items-center justify-between">
+          <div className="mt-3 text-xs text-slate-500 flex items-center justify-between">
             <span>Press Enter to send, Shift+Enter for new line</span>
             <span className="text-slate-400">Powered by AI</span>
           </div>

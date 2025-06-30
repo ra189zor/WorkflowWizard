@@ -56,26 +56,32 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="flex h-[calc(100vh-4rem)]">
-        <div className="sidebar">
-          <Sidebar onSelectTemplate={setSelectedWorkflow} />
-        </div>
-        
-        <main className="flex-1 flex overflow-hidden">
-          <div className="chat-input flex-1 min-w-0">
+      {/* Main Layout with improved spacing and visual hierarchy */}
+      <div className="h-[calc(100vh-4rem)] p-8">
+        <div className="h-full grid grid-cols-[320px_1fr_600px] gap-8 max-w-[1800px] mx-auto">
+          {/* Left Sidebar */}
+          <div className="sidebar bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <Sidebar onSelectTemplate={setSelectedWorkflow} />
+          </div>
+          
+          {/* Central Column - Dominant */}
+          <div className="chat-input bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden" 
+               style={{ backgroundColor: '#FAFAFA', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}>
             <ChatInterface 
               onWorkflowGenerated={setSelectedWorkflow}
               isGenerating={isGenerating}
               onGeneratingChange={setIsGenerating}
             />
           </div>
-          <div className="workflow-panel">
+
+          {/* Right Panel */}
+          <div className="workflow-panel bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
             <WorkflowPanel 
               workflow={selectedWorkflow}
               isGenerating={isGenerating}
             />
           </div>
-        </main>
+        </div>
       </div>
       
       <HowItWorksModal />

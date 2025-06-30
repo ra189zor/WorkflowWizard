@@ -39,14 +39,14 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
   };
 
   return (
-    <aside className="w-80 bg-white border-r border-slate-200 flex flex-col">
-      <div className="p-6 border-b border-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900 mb-4">Quick Templates</h2>
+    <aside className="w-full bg-white flex flex-col h-full">
+      <div className="p-8 border-b border-slate-200">
+        <h2 className="text-lg font-semibold text-slate-900 mb-6">Quick Templates</h2>
         
-        <div className="space-y-3">
+        <div className="space-y-4">
           {isLoading ? (
             Array.from({ length: 3 }).map((_, i) => (
-              <Card key={i} className="p-3">
+              <Card key={i} className="p-4">
                 <Skeleton className="h-4 w-3/4 mb-2" />
                 <Skeleton className="h-3 w-full" />
               </Card>
@@ -56,7 +56,7 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
               <Button
                 key={template.id}
                 variant="outline"
-                className="w-full text-left p-3 h-auto justify-start hover:border-primary hover:bg-blue-50 transition-colors group"
+                className="w-full text-left p-4 h-auto justify-start hover:border-primary hover:bg-blue-50 transition-colors group"
                 onClick={() => handleTemplateClick(template)}
               >
                 <div>
@@ -73,10 +73,10 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
         </div>
       </div>
       
-      {/* Recent Workflows Section */}
+      {/* Recent Workflows Section with increased spacing */}
       {recentWorkflows.length > 0 && (
-        <div className="p-6 border-b border-slate-200 recent-workflows">
-          <div className="flex items-center justify-between mb-4">
+        <div className="p-8 border-b border-slate-200 recent-workflows">
+          <div className="flex items-center justify-between mb-6">
             <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide">
               Recent Workflows
             </h3>
@@ -90,12 +90,12 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
             </Button>
           </div>
           
-          <div className="space-y-2">
+          <div className="space-y-3">
             {recentWorkflows.map((workflow) => (
               <Button
                 key={workflow.id}
                 variant="ghost"
-                className="w-full text-left p-2 h-auto justify-start hover:bg-blue-50 transition-colors group"
+                className="w-full text-left p-3 h-auto justify-start hover:bg-blue-50 transition-colors group"
                 onClick={() => handleRecentWorkflowClick(workflow)}
               >
                 <div className="flex items-start space-x-2 w-full">
@@ -115,15 +115,15 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
         </div>
       )}
       
-      <div className="p-6">
-        <h3 className="text-sm font-semibold text-slate-900 mb-3 uppercase tracking-wide">
+      <div className="p-8 flex-1">
+        <h3 className="text-sm font-semibold text-slate-900 mb-4 uppercase tracking-wide">
           Example Prompts
         </h3>
-        <div className="space-y-2">
+        <div className="space-y-3">
           {examplePrompts.map((prompt, index) => (
             <div
               key={index}
-              className="text-sm text-slate-600 p-2 bg-slate-50 rounded cursor-pointer hover:bg-slate-100 transition-colors"
+              className="text-sm text-slate-600 p-3 bg-slate-50 rounded cursor-pointer hover:bg-slate-100 transition-colors"
               onClick={() => handlePromptClick(prompt)}
             >
               "{prompt}"

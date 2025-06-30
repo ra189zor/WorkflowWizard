@@ -57,8 +57,8 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
 
   if (isGenerating) {
     return (
-      <div className="w-1/2 border-l border-slate-200 bg-white flex flex-col">
-        <div className="p-6 border-b border-slate-200">
+      <div className="w-full bg-white flex flex-col h-full">
+        <div className="p-8 border-b border-slate-200">
           <h3 className="text-lg font-semibold text-slate-900">Generating Workflow</h3>
         </div>
         
@@ -75,8 +75,8 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
 
   if (!workflow) {
     return (
-      <div className="w-1/2 border-l border-slate-200 bg-white flex flex-col">
-        <div className="p-6 border-b border-slate-200">
+      <div className="w-full bg-white flex flex-col h-full">
+        <div className="p-8 border-b border-slate-200">
           <h3 className="text-lg font-semibold text-slate-900">Generated Workflow</h3>
           <p className="text-sm text-slate-500 mt-1">n8n JSON Configuration</p>
         </div>
@@ -105,8 +105,8 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
   ));
 
   return (
-    <div className="w-1/2 min-w-[600px] lg:w-2/5 xl:w-1/2 border-l border-slate-200 bg-white flex flex-col">
-      <div className="p-6 border-b border-slate-200">
+    <div className="w-full bg-white flex flex-col h-full">
+      <div className="p-8 border-b border-slate-200">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-slate-900">Generated Workflow</h3>
@@ -133,17 +133,17 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
         </div>
       </div>
 
-      {/* Workflow Stats */}
-      <div className="p-6 border-b border-slate-200">
-        <div className="grid grid-cols-2 gap-4 mb-4">
+      {/* Workflow Stats with increased padding */}
+      <div className="p-8 border-b border-slate-200">
+        <div className="grid grid-cols-2 gap-6 mb-6">
           <Card>
-            <CardContent className="p-3 text-center">
+            <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-primary">{nodeCount}</div>
               <div className="text-xs text-slate-600">Nodes</div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-3 text-center">
+            <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-green-600">{integrations.length}</div>
               <div className="text-xs text-slate-600">Integrations</div>
             </CardContent>
@@ -151,9 +151,9 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
         </div>
       </div>
 
-      {/* Workflow Tabs */}
+      {/* Workflow Tabs with increased padding */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="p-6 border-b border-slate-200 flex-shrink-0">
+        <div className="p-8 border-b border-slate-200 flex-shrink-0">
           <Tabs defaultValue="preview" className="w-full h-full flex flex-col">
             <TabsList className="grid w-full grid-cols-3 flex-shrink-0">
               <TabsTrigger value="preview" className="flex items-center space-x-2">
@@ -171,18 +171,18 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
             </TabsList>
             
             <div className="flex-1 overflow-hidden">
-              <TabsContent value="preview" className="mt-4 h-full overflow-auto">
+              <TabsContent value="preview" className="mt-6 h-full overflow-auto">
                 <WorkflowPreview workflow={workflow} />
               </TabsContent>
               
-              <TabsContent value="analysis" className="mt-4 h-full overflow-auto">
+              <TabsContent value="analysis" className="mt-6 h-full overflow-auto">
                 <ComplexityMeter workflow={workflow} />
               </TabsContent>
               
-              <TabsContent value="overview" className="mt-4 h-full overflow-auto">
+              <TabsContent value="overview" className="mt-6 h-full overflow-auto">
                 <Card className="h-full">
-                  <CardContent className="p-4 h-full overflow-auto">
-                    <div className="flex items-center justify-between mb-4">
+                  <CardContent className="p-6 h-full overflow-auto">
+                    <div className="flex items-center justify-between mb-6">
                       <h4 className="text-sm font-semibold text-slate-900">Workflow Structure</h4>
                       <Button
                         variant="outline"
@@ -211,13 +211,13 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
         </div>
       </div>
 
-        {/* Integration Requirements */}
+        {/* Integration Requirements with increased padding */}
         {integrations.length > 0 && (
-          <div className="p-6 border-b border-slate-200 flex-shrink-0">
-            <h4 className="text-sm font-semibold text-slate-900 mb-3">Required Integrations</h4>
-            <div className="space-y-2 max-h-32 overflow-y-auto">
+          <div className="p-8 border-b border-slate-200 flex-shrink-0">
+            <h4 className="text-sm font-semibold text-slate-900 mb-4">Required Integrations</h4>
+            <div className="space-y-3 max-h-32 overflow-y-auto">
               {integrations.map((integration, index) => (
-                <div key={index} className="flex items-center space-x-3 p-2 bg-orange-50 rounded-lg">
+                <div key={index} className="flex items-center space-x-3 p-3 bg-orange-50 rounded-lg">
                   <div className="w-2 h-2 bg-orange-500 rounded-full" />
                   <span className="text-sm text-slate-700 capitalize">{integration}</span>
                   <span className="ml-auto px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded">
@@ -231,7 +231,7 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
 
         {/* JSON Display */}
         <div className="flex-1 overflow-hidden flex flex-col min-h-0">
-          <div className="p-4 bg-slate-50 border-b border-slate-200 flex-shrink-0 flex items-center justify-between">
+          <div className="p-6 bg-slate-50 border-b border-slate-200 flex-shrink-0 flex items-center justify-between">
             <h4 className="text-sm font-semibold text-slate-900">n8n Workflow JSON</h4>
             <div className="flex space-x-2">
               <Button
@@ -260,7 +260,7 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
             </div>
           </div>
           <div className="flex-1 overflow-auto">
-            <pre className="p-4 text-xs bg-slate-900 text-slate-100 min-h-full leading-relaxed">
+            <pre className="p-6 text-xs bg-slate-900 text-slate-100 min-h-full leading-relaxed">
               <code>
                 {JSON.stringify(workflow, null, 2)}
               </code>
@@ -268,9 +268,9 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="p-6 border-t border-slate-200 flex-shrink-0">
-          <div className="grid grid-cols-2 gap-3">
+        {/* Action Buttons with increased padding */}
+        <div className="p-8 border-t border-slate-200 flex-shrink-0">
+          <div className="grid grid-cols-2 gap-4">
             <Button
               variant="outline"
               onClick={copyToClipboard}
