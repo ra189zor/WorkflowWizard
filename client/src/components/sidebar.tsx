@@ -40,16 +40,16 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
 
   return (
     <aside className="w-full bg-white flex flex-col h-full">
-      <div className="p-8 border-b border-slate-200">
+      <div className="p-6 border-b border-slate-200">
         {/* Enhanced Section Header */}
-        <h2 className="text-xl font-bold text-slate-900 mb-6 uppercase tracking-wider" style={{ letterSpacing: '0.05em' }}>
+        <h2 className="text-lg font-bold text-slate-900 mb-4 uppercase tracking-wider" style={{ letterSpacing: '0.05em' }}>
           Quick Templates
         </h2>
         
-        <div className="space-y-4">
+        <div className="space-y-3">
           {isLoading ? (
             Array.from({ length: 3 }).map((_, i) => (
-              <Card key={i} className="p-4">
+              <Card key={i} className="p-3">
                 <Skeleton className="h-4 w-3/4 mb-2" />
                 <Skeleton className="h-3 w-full" />
               </Card>
@@ -59,16 +59,16 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
               <Button
                 key={template.id}
                 variant="outline"
-                className="w-full text-left p-4 h-auto justify-start hover:border-primary hover:bg-blue-50 transition-all duration-200 group hover:shadow-md"
+                className="w-full text-left p-3 h-auto justify-start hover:border-primary hover:bg-blue-50 transition-all duration-200 group hover:shadow-md"
                 onClick={() => handleTemplateClick(template)}
               >
-                <div className="flex items-start space-x-3">
-                  <Sparkles className="w-4 h-4 text-blue-500 mt-1 group-hover:text-primary transition-colors" />
-                  <div>
-                    <div className="font-semibold text-slate-900 group-hover:text-primary transition-colors">
+                <div className="flex items-start space-x-3 w-full min-w-0">
+                  <Sparkles className="w-4 h-4 text-blue-500 mt-1 group-hover:text-primary transition-colors flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <div className="font-semibold text-slate-900 group-hover:text-primary transition-colors text-sm leading-tight">
                       {template.name}
                     </div>
-                    <div className="text-sm text-slate-500 mt-1 group-hover:text-slate-600 transition-colors">
+                    <div className="text-xs text-slate-500 mt-1 group-hover:text-slate-600 transition-colors leading-relaxed line-clamp-2">
                       {template.description}
                     </div>
                   </div>
@@ -81,8 +81,8 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
       
       {/* Recent Workflows Section with enhanced typography */}
       {recentWorkflows.length > 0 && (
-        <div className="p-8 border-b border-slate-200 recent-workflows">
-          <div className="flex items-center justify-between mb-6">
+        <div className="p-6 border-b border-slate-200 recent-workflows">
+          <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest" style={{ letterSpacing: '0.05em' }}>
               Recent Workflows
             </h3>
@@ -96,15 +96,15 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
             </Button>
           </div>
           
-          <div className="space-y-3">
+          <div className="space-y-2">
             {recentWorkflows.map((workflow) => (
               <Button
                 key={workflow.id}
                 variant="ghost"
-                className="w-full text-left p-3 h-auto justify-start hover:bg-blue-50 transition-all duration-200 group hover:shadow-sm"
+                className="w-full text-left p-2 h-auto justify-start hover:bg-blue-50 transition-all duration-200 group hover:shadow-sm"
                 onClick={() => handleRecentWorkflowClick(workflow)}
               >
-                <div className="flex items-start space-x-2 w-full">
+                <div className="flex items-start space-x-2 w-full min-w-0">
                   <Clock className="w-3 h-3 text-slate-400 mt-1 flex-shrink-0 group-hover:text-blue-500 transition-colors" />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-semibold text-slate-900 group-hover:text-primary truncate transition-colors">
@@ -121,20 +121,20 @@ export function Sidebar({ onSelectTemplate }: SidebarProps) {
         </div>
       )}
       
-      <div className="p-8 flex-1">
+      <div className="p-6 flex-1">
         {/* Enhanced Section Header */}
-        <h3 className="text-sm font-bold text-slate-900 mb-4 uppercase tracking-widest" style={{ letterSpacing: '0.05em' }}>
+        <h3 className="text-sm font-bold text-slate-900 mb-3 uppercase tracking-widest" style={{ letterSpacing: '0.05em' }}>
           Example Prompts
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-2">
           {examplePrompts.map((prompt, index) => (
             <div
               key={index}
-              className="text-sm text-slate-600 p-4 bg-slate-50 rounded-lg cursor-pointer hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:border-blue-200 border border-transparent transition-all duration-200 hover:shadow-sm group"
+              className="text-sm text-slate-600 p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:border-blue-200 border border-transparent transition-all duration-200 hover:shadow-sm group"
               onClick={() => handlePromptClick(prompt)}
             >
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-slate-400 rounded-full mt-2 group-hover:bg-blue-500 transition-colors"></div>
+              <div className="flex items-start space-x-2">
+                <div className="w-2 h-2 bg-slate-400 rounded-full mt-2 group-hover:bg-blue-500 transition-colors flex-shrink-0"></div>
                 <span className="group-hover:text-slate-800 transition-colors leading-relaxed">
                   "{prompt}"
                 </span>
