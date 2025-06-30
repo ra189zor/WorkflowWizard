@@ -35,16 +35,16 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Enhanced Header with stronger typography */}
+      {/* Enhanced Header with WorkflowWizard branding */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                n8
+                WW
               </div>
               <h1 className="text-xl font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
-                Automation Generator
+                WorkflowWizard
               </h1>
             </div>
             <nav className="hidden md:flex items-center space-x-6">
