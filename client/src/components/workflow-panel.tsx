@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Copy, Download, ExternalLink, Loader2, Play, BarChart3 } from "lucide-react";
+import { Copy, Download, ExternalLink, Loader2, Play, BarChart3, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { WorkflowVisualization } from "./workflow-visualization";
 import { WorkflowPreview } from "./workflow-preview";
@@ -15,6 +16,45 @@ interface WorkflowPanelProps {
 
 export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
   const { toast } = useToast();
+  const [showWorkflow, setShowWorkflow] = useState(false);
+  const [animationStep, setAnimationStep] = useState(0);
+  const [previousWorkflow, setPreviousWorkflow] = useState<N8nWorkflow | null>(null);
+
+  // Animation sequence when new workflow is generated
+  useEffect(() => {
+    if (workflow && workflow !== previousWorkflow && !isGenerating) {
+      // Reset animation state
+      setShowWorkflow(false);
+      setAnimationStep(0);
+      
+      // Start animation sequence
+      const animationSequence = async () => {
+        // Step 1: Show workflow structure (500ms delay)
+        setTimeout(() => {
+          setAnimationStep(1);
+          setShowWorkflow(true);
+        }, 500);
+        
+        // Step 2: Show stats and tabs (800ms delay)
+        setTimeout(() => {
+          setAnimationStep(2);
+        }, 1300);
+        
+        // Step 3: Show integration requirements (1100ms delay)
+        setTimeout(() => {
+          setAnimationStep(3);
+        }, 2100);
+        
+        // Step 4: Show JSON and action buttons (1400ms delay)
+        setTimeout(() => {
+          setAnimationStep(4);
+        }, 2800);
+      };
+      
+      animationSequence();
+      setPreviousWorkflow(workflow);
+    }
+  }, [workflow, isGenerating, previousWorkflow]);
 
   const copyToClipboard = async () => {
     if (!workflow) return;
@@ -66,9 +106,39 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
         
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-            <h4 className="text-lg font-semibold text-slate-900 mb-2">Creating Your Automation</h4>
-            <p className="text-slate-600">Analyzing your request and generating the n8n configuration...</p>
+            {/* Enhanced loading animation with n8n branding */}
+            <div className="relative mb-8">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto shadow-2xl">
+                <div className="text-white font-bold text-lg">n8</div>
+              </div>
+              <div className="absolute inset-0 w-20 h-20 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl mx-auto animate-ping opacity-20"></div>
+              <Sparkles className="absolute -top-2 -right-2 w-6 h-6 text-yellow-400 animate-bounce" />
+            </div>
+            
+            <h4 className="text-xl font-bold text-slate-900 mb-3">Creating Your Automation</h4>
+            <div className="space-y-2 text-slate-600 max-w-md mx-auto">
+              <div className="flex items-center justify-center space-x-2">
+                <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
+                <span className="text-sm">Analyzing your request...</span>
+              </div>
+              <div className="text-sm opacity-75">Building the perfect n8n workflow for you</div>
+            </div>
+            
+            {/* Progress indicators */}
+            <div className="mt-8 space-y-3">
+              <div className="flex justify-center space-x-2">
+                {[1, 2, 3, 4].map((step) => (
+                  <div
+                    key={step}
+                    className="w-2 h-2 rounded-full bg-blue-200 animate-pulse"
+                    style={{ animationDelay: `${step * 200}ms` }}
+                  />
+                ))}
+              </div>
+              <div className="text-xs text-slate-500">
+                This usually takes 5-10 seconds
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -110,6 +180,7 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
 
   return (
     <div className="w-full bg-white flex flex-col h-full">
+      {/* Header - Always visible */}
       <div className="p-8 border-b border-slate-200">
         <div className="flex items-center justify-between">
           <div>
@@ -139,167 +210,211 @@ export function WorkflowPanel({ workflow, isGenerating }: WorkflowPanelProps) {
         </div>
       </div>
 
-      {/* Workflow Stats with enhanced typography */}
-      <div className="p-8 border-b border-slate-200">
-        <div className="grid grid-cols-2 gap-6 mb-6">
-          <Card>
-            <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold text-primary">{nodeCount}</div>
-              <div className="text-xs text-slate-600 font-semibold uppercase tracking-wide">Nodes</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold text-green-600">{integrations.length}</div>
-              <div className="text-xs text-slate-600 font-semibold uppercase tracking-wide">Integrations</div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      {/* Workflow Tabs with enhanced typography */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="p-8 border-b border-slate-200 flex-shrink-0">
-          <Tabs defaultValue="preview" className="w-full h-full flex flex-col">
-            <TabsList className="grid w-full grid-cols-3 flex-shrink-0">
-              <TabsTrigger value="preview" className="flex items-center space-x-2 font-semibold">
-                <Play className="w-4 h-4" />
-                <span>Preview</span>
-              </TabsTrigger>
-              <TabsTrigger value="analysis" className="flex items-center space-x-2 font-semibold">
-                <BarChart3 className="w-4 h-4" />
-                <span>Analysis</span>
-              </TabsTrigger>
-              <TabsTrigger value="overview" className="flex items-center space-x-2 font-semibold">
-                <ExternalLink className="w-4 h-4" />
-                <span>Overview</span>
-              </TabsTrigger>
-            </TabsList>
-            
-            <div className="flex-1 overflow-hidden">
-              <TabsContent value="preview" className="mt-6 h-full overflow-auto">
-                <WorkflowPreview workflow={workflow} />
-              </TabsContent>
-              
-              <TabsContent value="analysis" className="mt-6 h-full overflow-auto">
-                <ComplexityMeter workflow={workflow} />
-              </TabsContent>
-              
-              <TabsContent value="overview" className="mt-6 h-full overflow-auto">
-                <Card className="h-full">
-                  <CardContent className="p-6 h-full overflow-auto">
-                    <div className="flex items-center justify-between mb-6">
-                      <h4 className="text-lg font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
-                        Workflow Structure
-                      </h4>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          // Open workflow in full-screen modal
-                          const event = new CustomEvent('openWorkflowModal', { 
-                            detail: { workflow } 
-                          });
-                          window.dispatchEvent(event);
-                        }}
-                        className="text-xs"
-                      >
-                        <ExternalLink className="w-3 h-3 mr-1" />
-                        Full View
-                      </Button>
-                    </div>
-                    <div className="overflow-auto">
-                      <WorkflowVisualization workflow={workflow} />
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
+      {/* Animated Content */}
+      {showWorkflow && (
+        <>
+          {/* Workflow Stats - Animated Step 2 */}
+          <div 
+            className={`p-8 border-b border-slate-200 transition-all duration-700 ${
+              animationStep >= 2 
+                ? 'opacity-100 transform translate-y-0' 
+                : 'opacity-0 transform translate-y-4'
+            }`}
+          >
+            <div className="grid grid-cols-2 gap-6 mb-6">
+              <Card className="transform transition-all duration-500" style={{ animationDelay: '100ms' }}>
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-primary animate-pulse">{nodeCount}</div>
+                  <div className="text-xs text-slate-600 font-semibold uppercase tracking-wide">Nodes</div>
+                </CardContent>
+              </Card>
+              <Card className="transform transition-all duration-500" style={{ animationDelay: '200ms' }}>
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-green-600 animate-pulse">{integrations.length}</div>
+                  <div className="text-xs text-slate-600 font-semibold uppercase tracking-wide">Integrations</div>
+                </CardContent>
+              </Card>
             </div>
-          </Tabs>
-        </div>
-      </div>
+          </div>
 
-        {/* Integration Requirements with enhanced typography */}
-        {integrations.length > 0 && (
-          <div className="p-8 border-b border-slate-200 flex-shrink-0">
-            <h4 className="text-lg font-bold text-slate-900 mb-4 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
-              Required Integrations
-            </h4>
-            <div className="space-y-3 max-h-32 overflow-y-auto">
-              {integrations.map((integration, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 bg-orange-50 rounded-lg">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full" />
-                  <span className="text-sm text-slate-700 capitalize font-medium">{integration}</span>
-                  <span className="ml-auto px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded font-semibold">
-                    Auth Required
-                  </span>
+          {/* Workflow Tabs - Animated Step 2 */}
+          <div 
+            className={`flex-1 flex flex-col overflow-hidden transition-all duration-700 ${
+              animationStep >= 2 
+                ? 'opacity-100 transform translate-y-0' 
+                : 'opacity-0 transform translate-y-4'
+            }`}
+            style={{ animationDelay: '300ms' }}
+          >
+            <div className="p-8 border-b border-slate-200 flex-shrink-0">
+              <Tabs defaultValue="preview" className="w-full h-full flex flex-col">
+                <TabsList className="grid w-full grid-cols-3 flex-shrink-0">
+                  <TabsTrigger value="preview" className="flex items-center space-x-2 font-semibold">
+                    <Play className="w-4 h-4" />
+                    <span>Preview</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="analysis" className="flex items-center space-x-2 font-semibold">
+                    <BarChart3 className="w-4 h-4" />
+                    <span>Analysis</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="overview" className="flex items-center space-x-2 font-semibold">
+                    <ExternalLink className="w-4 h-4" />
+                    <span>Overview</span>
+                  </TabsTrigger>
+                </TabsList>
+                
+                <div className="flex-1 overflow-hidden">
+                  <TabsContent value="preview" className="mt-6 h-full overflow-auto">
+                    <WorkflowPreview workflow={workflow} />
+                  </TabsContent>
+                  
+                  <TabsContent value="analysis" className="mt-6 h-full overflow-auto">
+                    <ComplexityMeter workflow={workflow} />
+                  </TabsContent>
+                  
+                  <TabsContent value="overview" className="mt-6 h-full overflow-auto">
+                    <Card className="h-full">
+                      <CardContent className="p-6 h-full overflow-auto">
+                        <div className="flex items-center justify-between mb-6">
+                          <h4 className="text-lg font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
+                            Workflow Structure
+                          </h4>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const event = new CustomEvent('openWorkflowModal', { 
+                                detail: { workflow } 
+                              });
+                              window.dispatchEvent(event);
+                            }}
+                            className="text-xs"
+                          >
+                            <ExternalLink className="w-3 h-3 mr-1" />
+                            Full View
+                          </Button>
+                        </div>
+                        <div className="overflow-auto">
+                          <WorkflowVisualization workflow={workflow} />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
                 </div>
-              ))}
+              </Tabs>
             </div>
           </div>
-        )}
 
-        {/* JSON Display with enhanced typography */}
-        <div className="flex-1 overflow-hidden flex flex-col min-h-0">
-          <div className="p-6 bg-slate-50 border-b border-slate-200 flex-shrink-0 flex items-center justify-between">
-            <h4 className="text-lg font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
-              n8n Workflow JSON
-            </h4>
-            <div className="flex space-x-2">
+          {/* Integration Requirements - Animated Step 3 */}
+          {integrations.length > 0 && (
+            <div 
+              className={`p-8 border-b border-slate-200 flex-shrink-0 transition-all duration-700 ${
+                animationStep >= 3 
+                  ? 'opacity-100 transform translate-y-0' 
+                  : 'opacity-0 transform translate-y-4'
+              }`}
+              style={{ animationDelay: '500ms' }}
+            >
+              <h4 className="text-lg font-bold text-slate-900 mb-4 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
+                Required Integrations
+              </h4>
+              <div className="space-y-3 max-h-32 overflow-y-auto">
+                {integrations.map((integration, index) => (
+                  <div 
+                    key={index} 
+                    className={`flex items-center space-x-3 p-3 bg-orange-50 rounded-lg transform transition-all duration-500 ${
+                      animationStep >= 3 ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                    }`}
+                    style={{ animationDelay: `${600 + index * 100}ms` }}
+                  >
+                    <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+                    <span className="text-sm text-slate-700 capitalize font-medium">{integration}</span>
+                    <span className="ml-auto px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded font-semibold">
+                      Auth Required
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* JSON Display - Animated Step 4 */}
+          <div 
+            className={`flex-1 overflow-hidden flex flex-col min-h-0 transition-all duration-700 ${
+              animationStep >= 4 
+                ? 'opacity-100 transform translate-y-0' 
+                : 'opacity-0 transform translate-y-4'
+            }`}
+            style={{ animationDelay: '700ms' }}
+          >
+            <div className="p-6 bg-slate-50 border-b border-slate-200 flex-shrink-0 flex items-center justify-between">
+              <h4 className="text-lg font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
+                n8n Workflow JSON
+              </h4>
+              <div className="flex space-x-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={copyToClipboard}
+                  className="text-xs"
+                >
+                  <Copy className="w-3 h-3 mr-1" />
+                  Copy
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    const event = new CustomEvent('openJsonModal', { 
+                      detail: { workflow } 
+                    });
+                    window.dispatchEvent(event);
+                  }}
+                  className="text-xs"
+                >
+                  <ExternalLink className="w-3 h-3 mr-1" />
+                  Expand
+                </Button>
+              </div>
+            </div>
+            <div className="flex-1 overflow-auto">
+              <pre className="p-6 text-xs bg-slate-900 text-slate-100 min-h-full leading-relaxed">
+                <code>
+                  {JSON.stringify(workflow, null, 2)}
+                </code>
+              </pre>
+            </div>
+          </div>
+
+          {/* Action Buttons - Animated Step 4 */}
+          <div 
+            className={`p-8 border-t border-slate-200 flex-shrink-0 transition-all duration-700 ${
+              animationStep >= 4 
+                ? 'opacity-100 transform translate-y-0' 
+                : 'opacity-0 transform translate-y-4'
+            }`}
+            style={{ animationDelay: '900ms' }}
+          >
+            <div className="grid grid-cols-2 gap-4">
               <Button
-                variant="ghost"
-                size="sm"
+                variant="outline"
                 onClick={copyToClipboard}
-                className="text-xs"
+                className="flex items-center justify-center font-semibold transform transition-all duration-300 hover:scale-105"
               >
-                <Copy className="w-3 h-3 mr-1" />
-                Copy
+                <Copy className="w-4 h-4 mr-2" />
+                Copy JSON
               </Button>
               <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  const event = new CustomEvent('openJsonModal', { 
-                    detail: { workflow } 
-                  });
-                  window.dispatchEvent(event);
-                }}
-                className="text-xs"
+                onClick={downloadWorkflow}
+                className="flex items-center justify-center font-semibold transform transition-all duration-300 hover:scale-105"
               >
-                <ExternalLink className="w-3 h-3 mr-1" />
-                Expand
+                <Download className="w-4 h-4 mr-2" />
+                Download
               </Button>
             </div>
           </div>
-          <div className="flex-1 overflow-auto">
-            <pre className="p-6 text-xs bg-slate-900 text-slate-100 min-h-full leading-relaxed">
-              <code>
-                {JSON.stringify(workflow, null, 2)}
-              </code>
-            </pre>
-          </div>
-        </div>
-
-        {/* Action Buttons with enhanced typography */}
-        <div className="p-8 border-t border-slate-200 flex-shrink-0">
-          <div className="grid grid-cols-2 gap-4">
-            <Button
-              variant="outline"
-              onClick={copyToClipboard}
-              className="flex items-center justify-center font-semibold"
-            >
-              <Copy className="w-4 h-4 mr-2" />
-              Copy JSON
-            </Button>
-            <Button
-              onClick={downloadWorkflow}
-              className="flex items-center justify-center font-semibold"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download
-            </Button>
-          </div>
-        </div>
+        </>
+      )}
     </div>
   );
 }
