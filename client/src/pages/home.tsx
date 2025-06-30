@@ -35,22 +35,22 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Enhanced Header with WorkflowWizard branding */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-sm">
+      {/* Enhanced Header with Improved Spacing and Alignment */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-8 lg:px-12">
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
                 WW
               </div>
-              <h1 className="text-xl font-bold text-slate-900 uppercase tracking-wide" style={{ letterSpacing: '0.05em' }}>
+              <h1 className="text-2xl font-bold text-slate-900 uppercase tracking-wider" style={{ letterSpacing: '0.08em' }}>
                 WorkflowWizard
               </h1>
             </div>
-            <nav className="hidden md:flex items-center space-x-6">
-              <a href="#" className="text-slate-600 hover:text-slate-900 font-semibold">Templates</a>
-              <a href="#" className="text-slate-600 hover:text-slate-900 font-semibold">Docs</a>
-              <button className="bg-primary text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition-colors">
+            <nav className="hidden md:flex items-center space-x-8">
+              <a href="#" className="text-slate-600 hover:text-slate-900 font-semibold transition-colors">Templates</a>
+              <a href="#" className="text-slate-600 hover:text-slate-900 font-semibold transition-colors">Docs</a>
+              <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl">
                 Sign In
               </button>
             </nav>
@@ -58,17 +58,20 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Layout with improved spacing and visual hierarchy */}
-      <div className="h-[calc(100vh-4rem)] p-8">
-        <div className="h-full grid grid-cols-[320px_1fr_600px] gap-8 max-w-[1800px] mx-auto">
-          {/* Left Sidebar */}
-          <div className="sidebar bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+      {/* Main Layout with Enhanced Spacing and Visual Hierarchy */}
+      <div className="h-[calc(100vh-5rem)] p-8 lg:p-12">
+        <div className="h-full grid grid-cols-[340px_1fr_640px] gap-8 max-w-[1900px] mx-auto">
+          {/* Left Sidebar - Enhanced with Better Spacing */}
+          <div className="sidebar bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
             <Sidebar onSelectTemplate={setSelectedWorkflow} />
           </div>
           
-          {/* Central Column - Dominant */}
-          <div className="chat-input bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden" 
-               style={{ backgroundColor: '#FAFAFA', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}>
+          {/* Central Column - Dominant with Enhanced Visual Presence */}
+          <div className="chat-input bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden" 
+               style={{ 
+                 backgroundColor: '#FAFAFA', 
+                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04)' 
+               }}>
             <ChatInterface 
               onWorkflowGenerated={setSelectedWorkflow}
               isGenerating={isGenerating}
@@ -76,8 +79,8 @@ export default function Home() {
             />
           </div>
 
-          {/* Right Panel */}
-          <div className="workflow-panel bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          {/* Right Panel - Enhanced with Better Visual Balance */}
+          <div className="workflow-panel bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
             <WorkflowPanel 
               workflow={selectedWorkflow}
               isGenerating={isGenerating}
