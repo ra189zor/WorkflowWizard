@@ -53,7 +53,8 @@ export function ChatInterface({
 
   const [currentPrompt, setCurrentPrompt] = useState<string>("");
 
-  const welcomeText = "👋 Hi! I'm your n8n automation assistant. Describe the workflow you'd like to create, and I'll generate the complete n8n configuration for you.\n\nTry something like: \"Send me a Slack notification when I receive emails from clients containing 'urgent'\"";
+  // Shortened welcome message without the "Try something like" example
+  const welcomeText = "👋 Hi! I'm your n8n automation assistant. Describe the workflow you'd like to create, and I'll generate the complete n8n configuration for you.";
 
   useEffect(() => {
     // Add welcome message after typing animation completes
