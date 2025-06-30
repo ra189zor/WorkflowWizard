@@ -172,6 +172,14 @@ Feel free to try again with a modified request!`;
     }
   };
 
+  const handleViewWorkflow = (workflowData: N8nWorkflow) => {
+    // Dispatch custom event to open the workflow modal
+    const event = new CustomEvent('openWorkflowModal', { 
+      detail: { workflow: workflowData } 
+    });
+    window.dispatchEvent(event);
+  };
+
   return (
     <div className="flex-1 flex flex-col h-full">
       {/* Chat Messages with increased padding */}
@@ -223,6 +231,7 @@ Feel free to try again with a modified request!`;
                           size="sm"
                           variant={message.role === 'user' ? 'secondary' : 'default'}
                           className="text-xs"
+                          onClick={() => handleViewWorkflow(message.workflowData)}
                         >
                           View Workflow
                         </Button>
@@ -230,6 +239,19 @@ Feel free to try again with a modified request!`;
                           size="sm"
                           variant="outline"
                           className="text-xs"
+                          onClick={() => {
+                            const blob = new Blob([JSON.stringify(message.workflowData, null, 2)], { 
+                              type: 'application/json' 
+                            });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `n8n-workflow-${Date.now()}.json`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                          }}
                         >
                           Download JSON
                         </Button>
