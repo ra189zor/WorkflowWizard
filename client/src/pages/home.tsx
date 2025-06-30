@@ -74,15 +74,15 @@ export default function Home() {
                 Docs
               </a>
               
-              {/* GitHub CTA Button - Outline Style with Brand Colors */}
+              {/* GitHub CTA Button - Perfect Outline Style with Brand Colors */}
               <button 
                 onClick={handleGitHubClick}
-                className="flex items-center space-x-2 px-4 py-2 border-2 border-blue-500 text-blue-600 hover:bg-blue-50 hover:border-blue-600 hover:text-blue-700 rounded-lg font-medium transition-all duration-200 group"
+                className="flex items-center space-x-2 px-4 py-2.5 border-2 border-blue-500 text-blue-600 hover:bg-blue-50 hover:border-blue-600 hover:text-blue-700 rounded-lg font-medium transition-all duration-200 group shadow-sm hover:shadow-md"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
-                <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                <span>View Source</span>
-                <ExternalLink className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity" />
+                <Github className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                <span className="font-semibold">View Source</span>
+                <ExternalLink className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity duration-200" />
               </button>
 
               {/* Primary CTA Button */}
@@ -95,10 +95,11 @@ export default function Home() {
             <div className="md:hidden flex items-center space-x-3">
               <button 
                 onClick={handleGitHubClick}
-                className="flex items-center space-x-2 px-3 py-2 border-2 border-blue-500 text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
+                className="flex items-center space-x-2 px-3 py-2 border-2 border-blue-500 text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 shadow-sm"
+                style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 <Github className="w-4 h-4" />
-                <span className="text-sm font-medium">Source</span>
+                <span className="text-sm font-semibold">Source</span>
               </button>
             </div>
           </div>
