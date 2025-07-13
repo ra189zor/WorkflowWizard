@@ -7,6 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, ArrowLeft, Github, Mail, CheckCircle, X } from "lucide-react";
 import { Link } from "wouter";
+import { useAuth } from "@/components/auth-provider";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +30,8 @@ export default function Signup() {
     number: false,
     special: false
   });
+  const { signup } = useAuth();
+  const { toast } = useToast();
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -56,12 +60,26 @@ export default function Signup() {
     
     setIsLoading(true);
     
-    // Simulate signup process
-    setTimeout(() => {
+    try {
+      const fullName = `${formData.firstName} ${formData.lastName}`.trim();
+      await signup(formData.email, formData.password, fullName);
+      
+      toast({
+        title: "Account Created!",
+        description: "Welcome to WorkflowWizard! You can now start creating workflows.",
+      });
+      
+      // Redirect to app
+      window.location.href = "/app";
+    } catch (error) {
+      toast({
+        title: "Signup Failed",
+        description: error instanceof Error ? error.message : "Failed to create account",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-      // Redirect to dashboard or welcome page
-      window.location.href = "/";
-    }, 2000);
+    }
   };
 
   const PasswordRequirement = ({ met, text }: { met: boolean; text: string }) => (

@@ -5,6 +5,7 @@ import type { InsertWorkflow, ChatMessage, N8nWorkflow } from '@shared/schema';
 export interface GenerateWorkflowOptions {
   prompt: string;
   conversationId?: string;
+  userId?: number | null;
 }
 
 export interface WorkflowGenerationResponse {
@@ -18,7 +19,7 @@ export interface WorkflowGenerationResponse {
 export class WorkflowGeneratorService {
   
   async generateWorkflow(options: GenerateWorkflowOptions): Promise<WorkflowGenerationResponse> {
-    const { prompt, conversationId } = options;
+    const { prompt, conversationId, userId } = options;
     
     try {
       // Generate workflow using OpenAI
@@ -29,6 +30,7 @@ export class WorkflowGeneratorService {
       
       // Create workflow record
       const workflowData: InsertWorkflow = {
+        userId,
         title: this.generateWorkflowTitle(prompt),
         description: result.explanation,
         userPrompt: prompt,
@@ -45,7 +47,8 @@ export class WorkflowGeneratorService {
         prompt,
         result.explanation,
         savedWorkflow.id,
-        result.workflow
+        result.workflow,
+        userId
       );
       
       // Combine validation suggestions with AI suggestions
@@ -73,7 +76,8 @@ export class WorkflowGeneratorService {
     userPrompt: string,
     aiResponse: string,
     workflowId: number,
-    workflowData: any
+    workflowData: any,
+    userId?: number | null
   ): Promise<string> {
     const userMessage: ChatMessage = {
       id: `msg_${Date.now()}_user`,
@@ -109,6 +113,7 @@ export class WorkflowGeneratorService {
     
     // Create new conversation
     const newConversation = await storage.createConversation({
+      userId,
       messages: [userMessage, assistantMessage],
       workflowId
     });

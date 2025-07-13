@@ -5,6 +5,9 @@ import { WorkflowPanel } from "@/components/workflow-panel";
 import { WorkflowModal } from "@/components/workflow-modal";
 import { HowItWorksModal } from "@/components/how-it-works-modal";
 import { TutorialWalkthrough } from "@/components/tutorial-walkthrough";
+import { SubscriptionBanner } from "@/components/subscription-banner";
+import { UsageMeter } from "@/components/usage-meter";
+import { useAuth } from "@/components/auth-provider";
 import { Github, ExternalLink } from "lucide-react";
 import { Link } from "wouter";
 import type { N8nWorkflow } from "@/lib/types";
@@ -14,6 +17,11 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [modalWorkflow, setModalWorkflow] = useState<N8nWorkflow | null>(null);
   const [modalMode, setModalMode] = useState<'overview' | 'json'>('overview');
+  const { user, logout } = useAuth();
+
+  // Mock usage data - in real app, this would come from API
+  const workflowsUsed = 3;
+  const workflowLimit = user?.subscriptionStatus === 'active' ? 100 : 5;
 
   useEffect(() => {
     const handleOpenWorkflowModal = (event: CustomEvent) => {
@@ -75,6 +83,21 @@ export default function Home() {
                 Docs
               </a>
               
+              {/* User Menu */}
+              {user && (
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm text-slate-600">
+                    Welcome, {user.name.split(' ')[0]}
+                  </span>
+                  <button
+                    onClick={logout}
+                    className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+
               {/* GitHub CTA Button - Perfect Outline Style with Brand Colors */}
               <button 
                 onClick={handleGitHubClick}
@@ -86,12 +109,14 @@ export default function Home() {
                 <ExternalLink className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity duration-200" />
               </button>
 
-              {/* Primary CTA Button */}
-              <Link href="/login">
-                <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  Sign In
-                </button>
-              </Link>
+              {/* Primary CTA Button - Show login if not authenticated */}
+              {!user && (
+                <Link href="/login">
+                  <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    Sign In
+                  </button>
+                </Link>
+              )}
             </nav>
 
             {/* Mobile Menu Button (for smaller screens) */}
@@ -113,8 +138,19 @@ export default function Home() {
       <div className="h-[calc(100vh-5rem)] p-8 lg:p-12">
         <div className="h-full grid grid-cols-[340px_1fr_640px] gap-8 max-w-[1900px] mx-auto">
           {/* Left Sidebar - Enhanced with Better Typography */}
-          <div className="sidebar bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-            <Sidebar onSelectTemplate={setSelectedWorkflow} />
+          <div className="sidebar bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
+            <div className="flex-1 overflow-hidden">
+              <Sidebar onSelectTemplate={setSelectedWorkflow} />
+            </div>
+            {/* Usage Meter at bottom of sidebar */}
+            {user && (
+              <div className="p-4 border-t border-slate-200">
+                <UsageMeter 
+                  workflowsUsed={workflowsUsed}
+                  workflowLimit={workflowLimit}
+                />
+              </div>
+            )}
           </div>
           
           {/* Central Column - Dominant with Enhanced Visual Presence */}
@@ -123,6 +159,12 @@ export default function Home() {
                  backgroundColor: '#FAFAFA', 
                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04)' 
                }}>
+            {/* Subscription Banner */}
+            {user && (
+              <div className="p-6 pb-0">
+                <SubscriptionBanner />
+              </div>
+            )}
             <ChatInterface 
               onWorkflowGenerated={setSelectedWorkflow}
               isGenerating={isGenerating}

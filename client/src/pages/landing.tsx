@@ -16,12 +16,16 @@ import {
   Linkedin,
   ChevronDown,
   Menu,
-  X
+  X,
+  Crown,
+  Rocket
 } from "lucide-react";
 import { Link } from "wouter";
+import { PricingModal } from "@/components/pricing-modal";
 
 export default function Landing() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showPricing, setShowPricing] = useState(false);
 
   const features = [
     {
@@ -157,18 +161,16 @@ export default function Landing() {
                 </Button>
               </Link>
               <Link href="/app">
-                <Button size="lg" variant="outline" className="border-2 hover:bg-slate-50">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-2 hover:bg-slate-50"
+                  onClick={() => setShowPricing(true)}
+                >
                   <Play className="w-5 h-5 mr-2" />
-                  Try Demo
+                  View Pricing
                 </Button>
               </Link>
-            </div>
-
-            <div className="flex justify-center mb-12">
-              <Button size="lg" variant="outline" className="border-2 hover:bg-slate-50">
-                <Play className="w-5 h-5 mr-2" />
-                Watch Demo
-              </Button>
             </div>
 
             {/* Hero Image/Demo */}
@@ -277,6 +279,131 @@ export default function Landing() {
                 <p className="text-slate-600">{item.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-xl text-slate-600">
+              Choose the plan that's right for you
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Free Plan */}
+            <Card className="hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-slate-500 to-slate-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
+                  <Zap className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Free</h3>
+                <p className="text-slate-600 mb-6">Perfect for getting started</p>
+                <div className="text-4xl font-bold text-slate-900 mb-6">$0<span className="text-lg text-slate-500">/month</span></div>
+                <ul className="space-y-3 mb-8 text-left">
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">5 workflows per month</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">Basic templates</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">Community support</span>
+                  </li>
+                </ul>
+                <Link href="/signup">
+                  <Button className="w-full bg-slate-600 hover:bg-slate-700">
+                    Get Started Free
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Pro Plan */}
+            <Card className="relative hover:shadow-xl transition-all duration-300 border-0 shadow-lg ring-2 ring-blue-500">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <Badge className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-1">
+                  <Star className="w-3 h-3 mr-1" />
+                  Most Popular
+                </Badge>
+              </div>
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
+                  <Crown className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Pro</h3>
+                <p className="text-slate-600 mb-6">For professionals and teams</p>
+                <div className="text-4xl font-bold text-slate-900 mb-6">$29<span className="text-lg text-slate-500">/month</span></div>
+                <ul className="space-y-3 mb-8 text-left">
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">100 workflows per month</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">All premium templates</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">Priority support</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">Advanced AI models</span>
+                  </li>
+                </ul>
+                <Button 
+                  onClick={() => setShowPricing(true)}
+                  className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                >
+                  Start Pro Trial
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Enterprise Plan */}
+            <Card className="hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
+                  <Rocket className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Enterprise</h3>
+                <p className="text-slate-600 mb-6">For large organizations</p>
+                <div className="text-4xl font-bold text-slate-900 mb-6">$99<span className="text-lg text-slate-500">/month</span></div>
+                <ul className="space-y-3 mb-8 text-left">
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">Unlimited workflows</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">Custom templates</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">Dedicated support</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-600">API access</span>
+                  </li>
+                </ul>
+                <Button 
+                  onClick={() => setShowPricing(true)}
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700"
+                >
+                  Contact Sales
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -397,6 +524,11 @@ export default function Landing() {
           </div>
         </div>
       </footer>
+
+      <PricingModal
+        isOpen={showPricing}
+        onClose={() => setShowPricing(false)}
+      />
     </div>
   );
 }

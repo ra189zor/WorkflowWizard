@@ -1,6 +1,36 @@
-import { workflows, conversations, templates, type Workflow, type InsertWorkflow, type Conversation, type InsertConversation, type Template, type InsertTemplate } from "@shared/schema";
+import { 
+  workflows, 
+  conversations, 
+  templates, 
+  users,
+  usage,
+  plans,
+  type Workflow, 
+  type InsertWorkflow, 
+  type Conversation, 
+  type InsertConversation, 
+  type Template, 
+  type InsertTemplate,
+  type User,
+  type InsertUser,
+  type Usage,
+  type InsertUsage,
+  type Plan,
+  type InsertPlan
+} from "@shared/schema";
 
 export interface IStorage {
+  // Users
+  createUser(user: InsertUser & { passwordHash: string }): Promise<User>;
+  getUser(id: number): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
+  getUserBySubscriptionId(subscriptionId: string): Promise<User | undefined>;
+  updateUserSubscription(userId: number, data: Partial<User>): Promise<User | undefined>;
+  
+  // Usage tracking
+  getUserUsage(userId: number): Promise<Usage>;
+  incrementUserUsage(userId: number): Promise<void>;
+  
   // Workflows
   createWorkflow(workflow: InsertWorkflow): Promise<Workflow>;
   getWorkflow(id: number): Promise<Workflow | undefined>;
@@ -15,26 +45,81 @@ export interface IStorage {
   getTemplates(): Promise<Template[]>;
   getTemplate(id: number): Promise<Template | undefined>;
   getTemplatesByCategory(category: string): Promise<Template[]>;
+  
+  // Plans
+  getPlans(): Promise<Plan[]>;
+  getPlan(id: number): Promise<Plan | undefined>;
 }
 
 export class MemStorage implements IStorage {
+  private users: Map<number, User & { passwordHash: string }>;
+  private usage: Map<string, Usage>; // key: userId-month
   private workflows: Map<number, Workflow>;
   private conversations: Map<number, Conversation>;
   private templates: Map<number, Template>;
+  private plans: Map<number, Plan>;
+  private currentUserId: number;
   private currentWorkflowId: number;
   private currentConversationId: number;
   private currentTemplateId: number;
+  private currentPlanId: number;
 
   constructor() {
+    this.users = new Map();
+    this.usage = new Map();
     this.workflows = new Map();
     this.conversations = new Map();
     this.templates = new Map();
+    this.plans = new Map();
+    this.currentUserId = 1;
     this.currentWorkflowId = 1;
     this.currentConversationId = 1;
     this.currentTemplateId = 1;
+    this.currentPlanId = 1;
     
     // Initialize with sample templates
     this.initializeTemplates();
+    this.initializePlans();
+  }
+
+  private initializePlans() {
+    const samplePlans: InsertPlan[] = [
+      {
+        name: "Free",
+        description: "Perfect for getting started",
+        price: 0,
+        interval: "month",
+        workflowLimit: 5,
+        features: ["5 workflows per month", "Basic templates", "Community support"],
+        paddlePlanId: "free",
+        isPopular: false
+      },
+      {
+        name: "Pro",
+        description: "For professionals and teams",
+        price: 2900, // $29.00 in cents
+        interval: "month",
+        workflowLimit: 100,
+        features: ["100 workflows per month", "All premium templates", "Priority support", "Advanced AI models"],
+        paddlePlanId: "pro_monthly",
+        isPopular: true
+      },
+      {
+        name: "Enterprise",
+        description: "For large organizations",
+        price: 9900, // $99.00 in cents
+        interval: "month",
+        workflowLimit: -1, // unlimited
+        features: ["Unlimited workflows", "Custom templates", "Dedicated support", "API access"],
+        paddlePlanId: "enterprise_monthly",
+        isPopular: false
+      }
+    ];
+
+    samplePlans.forEach(plan => {
+      const id = this.currentPlanId++;
+      this.plans.set(id, { ...plan, id, createdAt: new Date() });
+    });
   }
 
   private initializeTemplates() {
@@ -141,6 +226,117 @@ export class MemStorage implements IStorage {
     });
   }
 
+  async createUser(insertUser: InsertUser & { passwordHash: string }): Promise<User> {
+    const id = this.currentUserId++;
+    const user: User & { passwordHash: string } = {
+      ...insertUser,
+      id,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.users.set(id, user);
+    
+    // Initialize usage for the user
+    const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
+    const usageKey = `${id}-${currentMonth}`;
+    this.usage.set(usageKey, {
+      id: this.usage.size + 1,
+      userId: id,
+      workflowsGenerated: 0,
+      month: currentMonth,
+      year: new Date().getFullYear(),
+      createdAt: new Date()
+    });
+    
+    // Return user without password hash
+    const { passwordHash, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+  }
+
+  async getUser(id: number): Promise<User | undefined> {
+    const user = this.users.get(id);
+    if (!user) return undefined;
+    
+    const { passwordHash, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+  }
+
+  async getUserByEmail(email: string): Promise<(User & { passwordHash?: string }) | undefined> {
+    for (const user of this.users.values()) {
+      if (user.email === email) {
+        return user;
+      }
+    }
+    return undefined;
+  }
+
+  async getUserBySubscriptionId(subscriptionId: string): Promise<User | undefined> {
+    for (const user of this.users.values()) {
+      if (user.subscriptionId === subscriptionId) {
+        const { passwordHash, ...userWithoutPassword } = user;
+        return userWithoutPassword;
+      }
+    }
+    return undefined;
+  }
+
+  async updateUserSubscription(userId: number, data: Partial<User>): Promise<User | undefined> {
+    const user = this.users.get(userId);
+    if (!user) return undefined;
+    
+    const updatedUser = { 
+      ...user, 
+      ...data, 
+      updatedAt: new Date() 
+    };
+    this.users.set(userId, updatedUser);
+    
+    const { passwordHash, ...userWithoutPassword } = updatedUser;
+    return userWithoutPassword;
+  }
+
+  async getUserUsage(userId: number): Promise<Usage> {
+    const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
+    const usageKey = `${userId}-${currentMonth}`;
+    
+    let usage = this.usage.get(usageKey);
+    if (!usage) {
+      // Create usage record for current month
+      usage = {
+        id: this.usage.size + 1,
+        userId,
+        workflowsGenerated: 0,
+        month: currentMonth,
+        year: new Date().getFullYear(),
+        createdAt: new Date()
+      };
+      this.usage.set(usageKey, usage);
+    }
+    
+    return usage;
+  }
+
+  async incrementUserUsage(userId: number): Promise<void> {
+    const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
+    const usageKey = `${userId}-${currentMonth}`;
+    
+    let usage = this.usage.get(usageKey);
+    if (!usage) {
+      usage = {
+        id: this.usage.size + 1,
+        userId,
+        workflowsGenerated: 1,
+        month: currentMonth,
+        year: new Date().getFullYear(),
+        createdAt: new Date()
+      };
+    } else {
+      usage.workflowsGenerated += 1;
+    }
+    
+    this.usage.set(usageKey, usage);
+  }
+
   async createWorkflow(insertWorkflow: InsertWorkflow): Promise<Workflow> {
     const id = this.currentWorkflowId++;
     const workflow: Workflow = {
@@ -197,6 +393,14 @@ export class MemStorage implements IStorage {
 
   async getTemplatesByCategory(category: string): Promise<Template[]> {
     return Array.from(this.templates.values()).filter(t => t.category === category);
+  }
+
+  async getPlans(): Promise<Plan[]> {
+    return Array.from(this.plans.values());
+  }
+
+  async getPlan(id: number): Promise<Plan | undefined> {
+    return this.plans.get(id);
   }
 }
 
