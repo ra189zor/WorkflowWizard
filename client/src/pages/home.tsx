@@ -6,6 +6,7 @@ import { WorkflowModal } from "@/components/workflow-modal";
 import { HowItWorksModal } from "@/components/how-it-works-modal";
 import { TutorialWalkthrough } from "@/components/tutorial-walkthrough";
 import { Github, ExternalLink } from "lucide-react";
+import { Link } from "wouter";
 import type { N8nWorkflow } from "@/lib/types";
 
 export default function Home() {
@@ -86,9 +87,11 @@ export default function Home() {
               </button>
 
               {/* Primary CTA Button */}
-              <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl" style={{ fontFamily: 'Inter, sans-serif' }}>
-                Sign In
-              </button>
+              <Link href="/login">
+                <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Sign In
+                </button>
+              </Link>
             </nav>
 
             {/* Mobile Menu Button (for smaller screens) */}
