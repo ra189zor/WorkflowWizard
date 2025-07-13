@@ -39,7 +39,8 @@ export class AuthService {
   }
 
   async getUserById(id: number): Promise<User | null> {
-    return storage.getUser(id);
+    const user = await storage.getUser(id);
+    return user ?? null;
   }
 
   async updateUserSubscription(userId: number, subscriptionData: UpdateSubscriptionRequest): Promise<User> {
